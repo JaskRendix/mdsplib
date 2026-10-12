@@ -1,57 +1,72 @@
 # $Id$
 
-CC = gcc
-#CC = clang
+CC ?= gcc
+AR ?= ar
 
-#CFLAGS = -g -O2 -fPIC -DDEBUGZZ
-#CFLAGS = -g -O0 -fPIC -DDEBUGZZ
-#CFLAGS = -g -Os -fPIC
-CFLAGS = -g -O2 -fPIC
-#CFLAGS = -g -O0 -fPIC
+CFLAGS ?= -g -O2 -fPIC
+ARFLAGS ?= ruv
 
-LIBS = 
+LIBS =
+
+OBJS = \
+	src/antoi.o \
+	src/charcmp.o \
+	src/decode_metar.o \
+	src/decode_metar_remark.o \
+	src/fracpart.o \
+	src/print_decoded_metar.o \
+	src/stspack2.o \
+	src/stspack3.o
+
+.PHONY: all library test install clean
+
+# Default target
+all: metar_test library
 
 library: libmetar.a
 
-all: metar_test library
+# Static library creation
+libmetar.a: $(OBJS)
+	$(AR) $(ARFLAGS) $@ $^
+	ranlib $@
 
-libmetar.a: src/antoi.o src/charcmp.o src/decode_metar.o src/decode_metar_remark.o src/fracpart.o src/print_decoded_metar.o src/stspack2.o src/stspack3.o
-	ar ruv libmetar.a src/antoi.o src/charcmp.o src/decode_metar.o src/decode_metar_remark.o src/fracpart.o src/print_decoded_metar.o src/stspack2.o src/stspack3.o
-	ranlib libmetar.a
-
+# Test executable
 metar_test: src/metar_test.o libmetar.a
-	$(CC) $(CFLAGS) -o metar_test src/metar_test.o libmetar.a $(LIBS)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
+# Source dependencies
 src/antoi.o: src/antoi.c src/local.h
-	$(CC) $(CFLAGS) -c src/antoi.c -o src/antoi.o
+	$(CC) $(CFLAGS) -c $< -o $@
 
 src/charcmp.o: src/charcmp.c src/local.h
-	$(CC) $(CFLAGS) -c src/charcmp.c -o src/charcmp.o
+	$(CC) $(CFLAGS) -c $< -o $@
 
 src/decode_metar.o: src/decode_metar.c src/metar_structs.h
-	$(CC) $(CFLAGS) -c src/decode_metar.c -o src/decode_metar.o
+	$(CC) $(CFLAGS) -c $< -o $@
 
 src/decode_metar_remark.o: src/decode_metar_remark.c src/metar_structs.h
-	$(CC) $(CFLAGS) -c src/decode_metar_remark.c -o src/decode_metar_remark.o
+	$(CC) $(CFLAGS) -c $< -o $@
 
 src/metar_test.o: src/metar_test.c src/metar_structs.h
-	$(CC) $(CFLAGS) -c src/metar_test.c -o src/metar_test.o
+	$(CC) $(CFLAGS) -c $< -o $@
 
 src/fracpart.o: src/fracpart.c src/local.h
-	$(CC) $(CFLAGS) -c src/fracpart.c -o src/fracpart.o
+	$(CC) $(CFLAGS) -c $< -o $@
 
 src/print_decoded_metar.o: src/print_decoded_metar.c src/metar_structs.h
-	$(CC) $(CFLAGS) -c src/print_decoded_metar.c -o src/print_decoded_metar.o
+	$(CC) $(CFLAGS) -c $< -o $@
 
 src/stspack2.o: src/stspack2.c src/local.h
-	$(CC) $(CFLAGS) -c src/stspack2.c -o src/stspack2.o
+	$(CC) $(CFLAGS) -c $< -o $@
 
 src/stspack3.o: src/stspack3.c src/local.h
-	$(CC) $(CFLAGS) -c src/stspack3.c -o src/stspack3.o
+	$(CC) $(CFLAGS) -c $< -o $@
 
-clean:
-	rm -f src/*.o metar_test libmetar.a
+# Run tests
+test: metar_test
+	./metar_test
 
+# Installation
 install: library
 	cp include/metar.h /usr/local/include/
 	chmod 0644 /usr/local/include/metar.h
@@ -59,17 +74,12 @@ install: library
 	chmod 0644 /usr/local/lib/libmetar.a
 	ranlib /usr/local/lib/libmetar.a
 
-test:	metar_test
-	./metar_test
-
-.PHONY : clean
+# Cleanup
 clean:
-ifeq ($(OS), Windows_NT)
-	echo off
-	del /q src\*.o
-	del /q metar_test.exe 
-	del /q libmetar.a
-	echo on
+ifeq ($(OS),Windows_NT)
+	del /q src\*.o 2>NUL
+	del /q metar_test.exe 2>NUL
+	del /q libmetar.a 2>NUL
 else
 	rm -f libmetar.a src/*.o src/*.a metar_test
 endif
