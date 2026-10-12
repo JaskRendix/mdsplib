@@ -3,7 +3,8 @@
 
 #include "metar_structs.h"
 
-MDSP_BOOL isPartialObscuration(char **string, Decoded_METAR *Mptr, int ndex, int *NDEX);
+MDSP_BOOL isPartialObscuration(char **string, Decoded_METAR *Mptr, int ndex,
+                               int *NDEX);
 MDSP_BOOL isVariableCIG(char **token, Decoded_METAR *Mptr, int *NDEX);
 MDSP_BOOL isCIG2ndSite(char **token, Decoded_METAR *Mptr, int *NDEX);
 MDSP_BOOL isSurfaceObscuration(char *string, Decoded_METAR *Mptr, int *NDEX);

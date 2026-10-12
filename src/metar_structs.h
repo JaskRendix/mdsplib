@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "../include/metar.h"
 #include "local.h"
 
-#define MAXWXSYMBOLS 10       /*-- NOT TO EXCEED 10 PRES. WX GRPS --*/
-#define MAXTOKENS    500      /*--  RPT NOT TO EXCEED 500 GRPS  --*/
+#define MAXWXSYMBOLS 10 /*-- NOT TO EXCEED 10 PRES. WX GRPS --*/
+#define MAXTOKENS 500   /*--  RPT NOT TO EXCEED 500 GRPS  --*/
 
 #endif /* METAR_STRUCTS_H */

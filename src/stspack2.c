@@ -17,8 +17,8 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "local.h"     /* standard header file */
- 
+#include "local.h" /* standard header file */
+
 /********************************************************************/
 /*                                                                  */
 /*  Title:          stspack2                                        */
@@ -86,167 +86,157 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 /*                  None.                                           */
 /*                                                                  */
 /********************************************************************/
- 
+
 int nisalnum(char *s, int n) {
- 
-   if (s == NULL)
+
+  if (s == NULL)
+    return (0);
+
+  for (; *s && n; s++, n--)
+
+    if (!isalnum((unsigned char)*s))
       return (0);
 
-   for (; *s && n; s++, n--)
- 
-      if (!isalnum((unsigned char)*s))
-         return (0);
- 
-   return (1);
- 
+  return (1);
+
 } /* end nisalnum */
- 
- 
+
 int nisalpha(char *s, int n) {
- 
-   if (s == NULL)
+
+  if (s == NULL)
+    return (0);
+
+  for (; *s && n; s++, n--)
+
+    if (!isalpha((unsigned char)*s))
       return (0);
 
-   for (; *s && n; s++, n--)
- 
-      if (!isalpha((unsigned char)*s))
-         return (0);
- 
-   return (1);
- 
+  return (1);
+
 } /* end nisalpha */
- 
- 
+
 int niscntrl(char *s, int n) {
- 
-   if (s == NULL)
+
+  if (s == NULL)
+    return (0);
+
+  for (; *s && n; s++, n--)
+
+    if (!iscntrl((unsigned char)*s))
       return (0);
 
-   for (; *s && n; s++, n--)
- 
-      if (!iscntrl((unsigned char)*s))
-         return (0);
- 
-   return (1);
- 
+  return (1);
+
 } /* end niscntrl */
- 
- 
+
 int nisdigit(char *s, int n) {
- 
-   if (s == NULL)
+
+  if (s == NULL)
+    return (0);
+
+  for (; *s && n; s++, n--)
+
+    if (!isdigit((unsigned char)*s))
       return (0);
 
-   for (; *s && n; s++, n--)
- 
-      if (!isdigit((unsigned char)*s))
-         return (0);
- 
-   return (1);
- 
+  return (1);
+
 } /* end nisdigit */
- 
- 
+
 int nisgraph(char *s, int n) {
- 
-   if (s == NULL)
+
+  if (s == NULL)
+    return (0);
+
+  for (; *s && n; s++, n--)
+
+    if (!isgraph((unsigned char)*s))
       return (0);
 
-   for (; *s && n; s++, n--)
- 
-      if (!isgraph((unsigned char)*s))
-         return (0);
- 
-   return (1);
- 
+  return (1);
+
 } /* end nisgraph */
- 
- 
+
 int nislower(char *s, int n) {
- 
-   if (s == NULL)
+
+  if (s == NULL)
+    return (0);
+
+  for (; *s && n; s++, n--)
+
+    if (!islower((unsigned char)*s))
       return (0);
 
-   for (; *s && n; s++, n--)
- 
-      if (!islower((unsigned char)*s))
-         return (0);
- 
-   return (1);
- 
+  return (1);
+
 } /* end nislower */
- 
- 
+
 int nisprint(char *s, int n) {
- 
-   if (s == NULL)
+
+  if (s == NULL)
+    return (0);
+
+  for (; *s && n; s++, n--)
+
+    if (!isprint((unsigned char)*s))
       return (0);
 
-   for (; *s && n; s++, n--)
- 
-      if (!isprint((unsigned char)*s))
-         return (0);
- 
-   return (1);
- 
+  return (1);
+
 } /* end nisprint */
- 
- 
+
 int nispunct(char *s, int n) {
- 
-   if (s == NULL)
+
+  if (s == NULL)
+    return (0);
+
+  for (; *s && n; s++, n--)
+
+    if (!ispunct((unsigned char)*s))
       return (0);
 
-   for (; *s && n; s++, n--)
- 
-      if (!ispunct((unsigned char)*s))
-         return (0);
- 
-   return (1);
- 
+  return (1);
+
 } /* end nispunct */
- 
- 
+
 int nisspace(char *s, int n) {
- 
-   if (s == NULL)
+
+  if (s == NULL)
+    return (0);
+
+  for (; *s && n; s++, n--)
+
+    if (!isspace((unsigned char)*s))
       return (0);
 
-   for (; *s && n; s++, n--)
- 
-      if (!isspace((unsigned char)*s))
-         return (0);
- 
-   return (1);
- 
+  return (1);
+
 } /* end nisspace */
- 
- 
+
 int nisupper(char *s, int n) {
- 
-   if (s == NULL)
+
+  if (s == NULL)
+    return (0);
+
+  for (; *s && n; s++, n--)
+
+    if (!isupper((unsigned char)*s))
       return (0);
 
-   for (; *s && n; s++, n--)
- 
-      if (!isupper((unsigned char)*s))
-         return (0);
- 
-   return (1);
- 
+  return (1);
+
 } /* end nisupper */
- 
- 
+
 int nisxdigi(char *s, int n) {
- 
-   if (s == NULL)
+
+  if (s == NULL)
+    return (0);
+
+  for (; *s && n; s++, n--)
+
+    if (!isxdigit((unsigned char)*s))
       return (0);
 
-   for (; *s && n; s++, n--)
- 
-      if (!isxdigit((unsigned char)*s))
-         return (0);
- 
-   return (1);
- 
+  return (1);
+
 } /* end nisxdigi */

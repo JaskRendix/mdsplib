@@ -33,8 +33,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef LOCAL_H
 #define LOCAL_H
 
-
-
 /*****************/
 /* Include Files */
 /*****************/
@@ -55,49 +53,45 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <string.h>
 #include <time.h>
 
-
-
 /********************/
 /* Standard Defines */
 /********************/
 
-#define FALSE        0                 /* boolean value */
-#define MAXINT       INT_MAX           /* maximum integer */
-#define MININT       INT_MIN           /* minimum integer */
-#define MAXNEG       INT_MIN           /* minimum integer */
-#define NO           FALSE             /* boolean value */
-#define TRUE         1                 /* boolean value */
-#define TRUNCATED    -1                /* indicates truncation */
-#define YES          TRUE              /* boolean value */
-
+#define FALSE 0        /* boolean value */
+#define MAXINT INT_MAX /* maximum integer */
+#define MININT INT_MIN /* minimum integer */
+#define MAXNEG INT_MIN /* minimum integer */
+#define NO FALSE       /* boolean value */
+#define TRUE 1         /* boolean value */
+#define TRUNCATED -1   /* indicates truncation */
+#define YES TRUE       /* boolean value */
 
 /*****************/
 /* Macro defines */
 /*****************/
 
-#define ABS(x)       (((x) < 0) ? -(x) : (x))
-#define clearscrn    system("CLRSCRN")
+#define ABS(x) (((x) < 0) ? -(x) : (x))
+#define clearscrn system("CLRSCRN")
 #define assgndev(d, v) v = 0x##d
-#define DIM(a)       (sizeof(a) / sizeof(a[0]))
-#define FOREVER      for(;;)           /* endless loop */
-#define getln(s, n)  ((fgets(s, n, stdin)==NULL) ? EOF : strlen(s))
-#define IMOD(i, j)   (((i) % (j)) < 0 ? ((i) % (j))+(j) : ((i) % (j)))
+#define DIM(a) (sizeof(a) / sizeof(a[0]))
+#define FOREVER for (;;) /* endless loop */
+#define getln(s, n) ((fgets(s, n, stdin) == NULL) ? EOF : strlen(s))
+#define IMOD(i, j) (((i) % (j)) < 0 ? ((i) % (j)) + (j) : ((i) % (j)))
 #define IN_RANGE(n, lo, hi) ((lo) <= (n) && (n) <= (hi))
-#define LOOPDN(r, n) for ((r) = (n)+1; --(r) > 0;)
-#define MAX(x, y)    (((x) < (y)) ? (y) : (x))
+#define LOOPDN(r, n) for ((r) = (n) + 1; --(r) > 0;)
+#define MAX(x, y) (((x) < (y)) ? (y) : (x))
 #ifndef _WIN32
-#define max(x, y)    (((x) < (y)) ? (y) : (x))
+#define max(x, y) (((x) < (y)) ? (y) : (x))
 #endif
-#define MIN(x, y)    (((x) < (y)) ? (x) : (y))
-#define min(x, y)    (((x) < (y)) ? (x) : (y))
-#define STREQ(s, t)  (strcmp(s, t) == 0)
-#define STRGT(s, t)  (strcmp(s, t) > 0)
-#define STRLT(s, t)  (strcmp(s, t) < 0)
+#define MIN(x, y) (((x) < (y)) ? (x) : (y))
+#define min(x, y) (((x) < (y)) ? (x) : (y))
+#define STREQ(s, t) (strcmp(s, t) == 0)
+#define STRGT(s, t) (strcmp(s, t) > 0)
+#define STRLT(s, t) (strcmp(s, t) < 0)
 #define STRNEQ(s, t, l) (strncmp(s, t, l) == 0)
 #define STRNGT(s, t, l) (strncmp(s, t, l) > 0)
 #define STRNLT(s, t, l) (strncmp(s, t, l) < 0)
-#define SWAP(a,b,t)  ((t) = (a), (a) = (b), (b) = (t))
-
+#define SWAP(a, b, t) ((t) = (a), (a) = (b), (b) = (t))
 
 /*********************************************************************/
 /*                                                                   */
@@ -124,8 +118,6 @@ void freex(void *, char *, int);
 
 #endif
 
-
-
 /*********************************************************************/
 /*                                                                   */
 /* General typedefs                                                  */
@@ -139,39 +131,32 @@ typedef unsigned char byte;
 typedef unsigned short int MDSP_BOOL;
 #endif
 
-
 typedef unsigned short int Devaddr;
 
 typedef struct diskaddr {
-	int cylinder;
-	int track;
-	int record;
+  int cylinder;
+  int track;
+  int record;
 } Diskaddr;
-
 
 typedef struct record_id {
 
-	char id[8];
-	time_t write_timestamp;
+  char id[8];
+  time_t write_timestamp;
 
 } Record_ID;
 
-
 typedef struct location {
 
-	union {
-		unsigned bsn;
-		char cs[9];
-		unsigned short msn;
-	} loc;
+  union {
+    unsigned bsn;
+    char cs[9];
+    unsigned short msn;
+  } loc;
 
-	unsigned location_is_bsn:1,
-	         location_is_cs:1,
-	         location_is_msn:1;
+  unsigned location_is_bsn : 1, location_is_cs : 1, location_is_msn : 1;
 
 } Location;
-
-
 
 /*********************************************************************/
 /*********************************************************************/
@@ -182,8 +167,6 @@ typedef struct location {
 /*                                                                   */
 /*********************************************************************/
 /*********************************************************************/
-
-
 
 /*********************************************************************/
 /*                                                                   */
@@ -196,23 +179,19 @@ typedef struct location {
 /*********************************************************************/
 
 typedef struct stn_info_node {
-	int key;
-	int block;
-	int station;
-	int latitude;
-	int longitude;
-	int elev;
-	struct stn_info_node * right;
-	struct stn_info_node * left;
+  int key;
+  int block;
+  int station;
+  int latitude;
+  int longitude;
+  int elev;
+  struct stn_info_node *right;
+  struct stn_info_node *left;
 } Stninfo;
 
 struct stn_info_node *bldstree(void);
 void delstree(struct stn_info_node *);
-struct stn_info_node *getstinf(struct stn_info_node *,
-                               int,
-                               int);
-
-
+struct stn_info_node *getstinf(struct stn_info_node *, int, int);
 
 /*********************************************************************/
 /*                                                                   */
@@ -223,30 +202,28 @@ struct stn_info_node *getstinf(struct stn_info_node *,
 /*********************************************************************/
 
 typedef struct CAPQ_data {
-	char * bulletin;
-	int bulletin_length;
-	char * WMO_heading;
-	char * AFOS_pil;
-	char * current_CAPQ_end_address;
-	int start_offset;
-	int record_count;
-	int end_offset;
-	char * bulletin_address;
-	int input_line;
-	int receive_line;
-	int receive_hour;
-	int receive_minute;
-	int CAPQ_day;
-	int CAPQ_hour;
-	int CAPQ_minute;
-	int rc;
-	char flag1;
-	char flag2;
+  char *bulletin;
+  int bulletin_length;
+  char *WMO_heading;
+  char *AFOS_pil;
+  char *current_CAPQ_end_address;
+  int start_offset;
+  int record_count;
+  int end_offset;
+  char *bulletin_address;
+  int input_line;
+  int receive_line;
+  int receive_hour;
+  int receive_minute;
+  int CAPQ_day;
+  int CAPQ_hour;
+  int CAPQ_minute;
+  int rc;
+  char flag1;
+  char flag2;
 } CAPQdata;
 
-struct CAPQ_data * capqread (char *, ...);
-
-
+struct CAPQ_data *capqread(char *, ...);
 
 /*********************************************************************/
 /*                                                                   */
@@ -257,67 +234,59 @@ struct CAPQ_data * capqread (char *, ...);
 /*********************************************************************/
 
 typedef struct MDAD_data {
-	char * bulletin;
-	int bulletin_length;
-	char * WMO_heading;
-	char * AFOS_pil;
-	char * current_MDAD_end_address;
-	int start_offset;
-	int record_count;
-	int end_offset;
-	char * bulletin_address;
-	int input_line;
-	int receive_line;
-	int receive_hour;
-	int receive_minute;
-	int MDAD_year;
-	int MDAD_month;
-	int MDAD_day;
-	int MDAD_hour;
-	int MDAD_minute;
-	int rc;
-	int part_number;
-	int number_of_parts;
-	char MDAD_flag;
-	char flag1;
-	char flag2;
-	char flag3;
-	char MDAD_flag2;
+  char *bulletin;
+  int bulletin_length;
+  char *WMO_heading;
+  char *AFOS_pil;
+  char *current_MDAD_end_address;
+  int start_offset;
+  int record_count;
+  int end_offset;
+  char *bulletin_address;
+  int input_line;
+  int receive_line;
+  int receive_hour;
+  int receive_minute;
+  int MDAD_year;
+  int MDAD_month;
+  int MDAD_day;
+  int MDAD_hour;
+  int MDAD_minute;
+  int rc;
+  int part_number;
+  int number_of_parts;
+  char MDAD_flag;
+  char flag1;
+  char flag2;
+  char flag3;
+  char MDAD_flag2;
 } MDADdata;
 
-MDADdata * mdadread (char *, ...);
-MDADdata * mdupread (char *, ...);
-MDADdata * mdadrd2 (char *, ...);
+MDADdata *mdadread(char *, ...);
+MDADdata *mdupread(char *, ...);
+MDADdata *mdadrd2(char *, ...);
 
-MDADdata * mdadscan (char *, ...);
-MDADdata * mdupscan (char *, ...);
+MDADdata *mdadscan(char *, ...);
+MDADdata *mdupscan(char *, ...);
 
-void mdadinpt ( MDADdata *, char, MDSP_BOOL );
+void mdadinpt(MDADdata *, char, MDSP_BOOL);
 
-char * mdadnxtr ( void );
-char * mdadnxtk ( void );
-
+char *mdadnxtr(void);
+char *mdadnxtk(void);
 
 #define MDAD_HISTORY_LIMIT 39
 
-typedef
-struct MDAD_history_entry
-{
-	unsigned short hour;
-	unsigned short minute;
-	Diskaddr MDAD_chain_addr;
-}
-MDAD_History_Entry;
+typedef struct MDAD_history_entry {
+  unsigned short hour;
+  unsigned short minute;
+  Diskaddr MDAD_chain_addr;
+} MDAD_History_Entry;
 
-typedef
-struct MDAD_history
-{
-	MDAD_History_Entry history_array[MDAD_HISTORY_LIMIT];
-}
-MDAD_History;
+typedef struct MDAD_history {
+  MDAD_History_Entry history_array[MDAD_HISTORY_LIMIT];
+} MDAD_History;
 
-MDAD_History *mdadhist ( void );
-
+MDAD_History *mdadhist(void);
 
 /*********************************************************************/
 /*                                                                   */
@@ -328,23 +297,21 @@ MDAD_History *mdadhist ( void );
 /*********************************************************************/
 
 typedef struct bltn_heading_info {
-	int bltn_day;
-	int bltn_hour;
-	int bltn_min;
-	int rtd_present;
-	int cor_present;
-	int amd_present;
-	char * first_report;
-	char TTAAii[7];
-	char CCCC[5];
-	char amd_seq;
-	char cor_seq;
-	char rtd_seq;
+  int bltn_day;
+  int bltn_hour;
+  int bltn_min;
+  int rtd_present;
+  int cor_present;
+  int amd_present;
+  char *first_report;
+  char TTAAii[7];
+  char CCCC[5];
+  char amd_seq;
+  char cor_seq;
+  char rtd_seq;
 } Abbrevhdg;
 
-Abbrevhdg *gethdgi(char * );
-
-
+Abbrevhdg *gethdgi(char *);
 
 /*********************************************************************/
 /*                                                                   */
@@ -355,18 +322,15 @@ Abbrevhdg *gethdgi(char * );
 /*                                                                   */
 /*********************************************************************/
 
-
 typedef struct tm_struct {
-	int hour;
-	int min;
+  int hour;
+  int min;
 } Stime;
 
 Stime *gettime(void);
 int suspend(Stime *, int);
 int timediff(Stime *, Stime *);
 #define timecmp timediff
-
-
 
 /*********************************************************************/
 /*                                                                   */
@@ -382,26 +346,24 @@ int timediff(Stime *, Stime *);
 /*********************************************************************/
 
 typedef struct rgtrdata {
-	Diskaddr forward_chain;
-	Diskaddr bulletin_addr;
-	int receive_line;
-	int receive_day;
-	Stime receive_time;
-	Stime RGTR_time;
-	int length;
-	char *bulletin;
-	char datatype;
+  Diskaddr forward_chain;
+  Diskaddr bulletin_addr;
+  int receive_line;
+  int receive_day;
+  Stime receive_time;
+  Stime RGTR_time;
+  int length;
+  char *bulletin;
+  char datatype;
 } RGTRdata;
 
 int rdtaend(char, Diskaddr *);
 int rdtaread(RGTRdata *);
 int rdtastrt(char, Diskaddr *);
-int rdtatend (char, Stime *);
+int rdtatend(char, Stime *);
 int rdtatnke(char);
 int rdtatstr(char, Stime *);
 void rdtainit(void);
-
-
 
 /*********************************************************************/
 /*                                                                   */
@@ -410,235 +372,209 @@ void rdtainit(void);
 /*                                                                   */
 /*********************************************************************/
 
-
-
 typedef struct rptNode {
-	char *rptPtr;
-	int rptLength;
-	struct rptNode* next;
+  char *rptPtr;
+  int rptLength;
+  struct rptNode *next;
 } RptNode;
 
-
 typedef struct synpBltn {
-	Abbrevhdg heading;
-	short int day;
-	short int hour;
-	int reportCount;
-	RptNode *rptList;
-	MDSP_BOOL valid;
+  Abbrevhdg heading;
+  short int day;
+  short int hour;
+  int reportCount;
+  RptNode *rptList;
+  MDSP_BOOL valid;
 } SynpBltn;
 
-
 typedef struct shipBltn {
-	Abbrevhdg heading;
-	int reportCount;
-	RptNode *rptList;
-	MDSP_BOOL valid;
+  Abbrevhdg heading;
+  int reportCount;
+  RptNode *rptList;
+  MDSP_BOOL valid;
 } ShipBltn;
 
-
 typedef struct tepiBltn {
-	Abbrevhdg heading;
-	int reportCount;
-	RptNode *rptList;
-	MDSP_BOOL valid;
+  Abbrevhdg heading;
+  int reportCount;
+  RptNode *rptList;
+  MDSP_BOOL valid;
 } TePiBltn;
 
-
 typedef struct drftBltn {
-	Abbrevhdg heading;
-	int reportCount;
-	RptNode *rptList;
-	MDSP_BOOL valid;
+  Abbrevhdg heading;
+  int reportCount;
+  RptNode *rptList;
+  MDSP_BOOL valid;
 } DrftBltn;
 
-
 typedef struct airpBltn {
-	Abbrevhdg heading;
-	int reportCount;
-	RptNode *rptList;
-	MDSP_BOOL valid;
+  Abbrevhdg heading;
+  int reportCount;
+  RptNode *rptList;
+  MDSP_BOOL valid;
 } AirpBltn;
 
-
 typedef struct amdrBltn {
-	Abbrevhdg heading;
-	short int day;
-	short int hour;
-	int reportCount;
-	RptNode *rptList;
-	MDSP_BOOL valid;
+  Abbrevhdg heading;
+  short int day;
+  short int hour;
+  int reportCount;
+  RptNode *rptList;
+  MDSP_BOOL valid;
 } AmdrBltn;
 
-
 typedef struct bthyBltn {
-	Abbrevhdg heading;
-	int reportCount;
-	RptNode *rptList;
-	MDSP_BOOL valid;
+  Abbrevhdg heading;
+  int reportCount;
+  RptNode *rptList;
+  MDSP_BOOL valid;
 } BthyBltn;
 
-
 typedef struct tescBltn {
-	Abbrevhdg heading;
-	int reportCount;
-	RptNode *rptList;
-	MDSP_BOOL valid;
+  Abbrevhdg heading;
+  int reportCount;
+  RptNode *rptList;
+  MDSP_BOOL valid;
 } TescBltn;
 
-
 typedef struct tracBltn {
-	Abbrevhdg heading;
-	int reportCount;
-	RptNode *rptList;
-	MDSP_BOOL valid;
+  Abbrevhdg heading;
+  int reportCount;
+  RptNode *rptList;
+  MDSP_BOOL valid;
 } TracBltn;
 
-
 typedef struct climBltn {
-	Abbrevhdg heading;
-	int reportCount;
-	int month;
-	int year;
-	RptNode *rptList;
-	MDSP_BOOL valid;
+  Abbrevhdg heading;
+  int reportCount;
+  int month;
+  int year;
+  RptNode *rptList;
+  MDSP_BOOL valid;
 } ClimBltn;
 
-
 typedef struct clmtBltn {
-	Abbrevhdg heading;
-	int reportCount;
-	int month;
-	int year;
-	RptNode *rptList;
-	MDSP_BOOL valid;
+  Abbrevhdg heading;
+  int reportCount;
+  int month;
+  int year;
+  RptNode *rptList;
+  MDSP_BOOL valid;
 } ClmtBltn;
 
-
 typedef struct metBltn {
-	Abbrevhdg heading;
-	int reportCount;
-	RptNode *rptList;
-	MDSP_BOOL valid;
-	short int day;              /* -1 indicates missing/invalid */
-	short int hour;             /* -1 indicates missing/invalid */
-	short int min;              /* -1 indicates missing/invalid */
+  Abbrevhdg heading;
+  int reportCount;
+  RptNode *rptList;
+  MDSP_BOOL valid;
+  short int day;  /* -1 indicates missing/invalid */
+  short int hour; /* -1 indicates missing/invalid */
+  short int min;  /* -1 indicates missing/invalid */
 } MetBltn;
 
-
 typedef struct saoBltn {
-	Abbrevhdg heading;
-	int reportCount;
-	RptNode *rptList;
-	MDSP_BOOL valid;
+  Abbrevhdg heading;
+  int reportCount;
+  RptNode *rptList;
+  MDSP_BOOL valid;
 } SAOBltn;
 
-
 typedef struct prBltn {
-	Abbrevhdg heading;
-	int reportCount;
-	RptNode *rptList;
-	MDSP_BOOL valid;
+  Abbrevhdg heading;
+  int reportCount;
+  RptNode *rptList;
+  MDSP_BOOL valid;
 } PRBltn;
 
-
 typedef struct tafBltn {
-	Abbrevhdg heading;
-	int reportCount;
-	RptNode *rptList;
-	MDSP_BOOL valid;
+  Abbrevhdg heading;
+  int reportCount;
+  RptNode *rptList;
+  MDSP_BOOL valid;
 } TafBltn;
 
-
 typedef struct arepBltn {
-	Abbrevhdg heading;
-	int reportCount;
-	RptNode *rptList;
-	MDSP_BOOL valid;
+  Abbrevhdg heading;
+  int reportCount;
+  RptNode *rptList;
+  MDSP_BOOL valid;
 } ArepBltn;
 
 typedef struct metrRptP {
-	char locind[4];
-	int groupCount;
-	short int day;             /* -1 indicates missing or invalid */
-	short int hour;            /* -1 indicates missing or invalid */
-	short int min;             /* -1 indicates missing or invalid */
-	MDSP_BOOL valid;
+  char locind[4];
+  int groupCount;
+  short int day;  /* -1 indicates missing or invalid */
+  short int hour; /* -1 indicates missing or invalid */
+  short int min;  /* -1 indicates missing or invalid */
+  MDSP_BOOL valid;
 } MetrRptP;
 
-
 typedef struct saoRptP {
-	char locind[4];
-	int groupCount;
-	short int hour;            /* -1 indicates missing or invalid */
-	short int min;             /* -1 indicates missing or invalid */
-	MDSP_BOOL valid;
+  char locind[4];
+  int groupCount;
+  short int hour; /* -1 indicates missing or invalid */
+  short int min;  /* -1 indicates missing or invalid */
+  MDSP_BOOL valid;
 } SAORptP;
 
-
 typedef struct prRptP {
-	char locind[4];
-	int groupCount;
-	short int hour;            /* -1 indicates missing or invalid */
-	short int min;             /* -1 indicates missing or invalid */
-	MDSP_BOOL valid;
+  char locind[4];
+  int groupCount;
+  short int hour; /* -1 indicates missing or invalid */
+  short int min;  /* -1 indicates missing or invalid */
+  MDSP_BOOL valid;
 } PRRptP;
 
-
 typedef struct tafRptP {
-	char locind[4];
-	int groupCount;
-	short int YY;
-	short int GG;
-	short int validPeriod;
-	MDSP_BOOL ammendment;
-	MDSP_BOOL correction;
-	MDSP_BOOL valid;
+  char locind[4];
+  int groupCount;
+  short int YY;
+  short int GG;
+  short int validPeriod;
+  MDSP_BOOL ammendment;
+  MDSP_BOOL correction;
+  MDSP_BOOL valid;
 } TafRptP;
 
-
 typedef struct synpRptP {
-	short int II;
-	short int iii;
-	int groupCount;
-	MDSP_BOOL valid;
+  short int II;
+  short int iii;
+  int groupCount;
+  MDSP_BOOL valid;
 } SynpRptP;
 
-
 typedef struct climRptP {
-	short int II;
-	short int iii;
-	int groupCount;
-	MDSP_BOOL valid;
+  short int II;
+  short int iii;
+  int groupCount;
+  MDSP_BOOL valid;
 } ClimRptP;
 
-
 typedef struct clmtRptP {
-	short int II;
-	short int iii;
-	int groupCount;
-	MDSP_BOOL valid;
+  short int II;
+  short int iii;
+  int groupCount;
+  MDSP_BOOL valid;
 } ClmtRptP;
 
-
 typedef struct tepiRptP {
-	short int II;
-	short int iii;
-	short int YY;
-	short int GG;
-	short int quad;
-	short int ulatitude;
-	short int ulongitude;
-	int msquare;
-	int latitude;
-	int longitude;
-	int groupCount;
-	char callsign[15];
-	char type;
-	char part;
-	MDSP_BOOL valid;
+  short int II;
+  short int iii;
+  short int YY;
+  short int GG;
+  short int quad;
+  short int ulatitude;
+  short int ulongitude;
+  int msquare;
+  int latitude;
+  int longitude;
+  int groupCount;
+  char callsign[15];
+  char type;
+  char part;
+  MDSP_BOOL valid;
 } TePiRptP;
-
 
 SynpBltn *pbsynp(char *);
 ShipBltn *pbship(char *);
@@ -651,14 +587,14 @@ TescBltn *pbtesc(char *);
 TracBltn *pbtrac(char *);
 ClimBltn *pbclim(char *);
 ClmtBltn *pbclmt(char *);
-MetBltn  *pbmetr(char *);
-MetBltn  *pbspec(char *);
-TafBltn  *pbtaf(char *);
-TafBltn  *pbtaf2(char *);
-TafBltn  *pbtaf3(char *);
-TafBltn  *pbtaf4(char *);
-SAOBltn  *pbsao(char *);
-PRBltn   *pbpirep(char *);
+MetBltn *pbmetr(char *);
+MetBltn *pbspec(char *);
+TafBltn *pbtaf(char *);
+TafBltn *pbtaf2(char *);
+TafBltn *pbtaf3(char *);
+TafBltn *pbtaf4(char *);
+SAOBltn *pbsao(char *);
+PRBltn *pbpirep(char *);
 ArepBltn *pbairep(char *);
 
 SynpRptP *prpsynp(char *, int);
@@ -666,15 +602,12 @@ TePiRptP *prptepi(char *, int);
 ClimRptP *prpclim(char *, int);
 ClmtRptP *prpclmt(char *, int);
 MetrRptP *prpmetr(char *, int);
-TafRptP  *prptaf(char *, int);
-TafRptP  *prptaf2(char *, int);
-TafRptP  *prptaf3(char *, int);
-TafRptP  *prptaf4(char *, int);
-SAORptP  *prpsao(char *, int);
-PRRptP   *prppirep(char *, int);
-
-
-
+TafRptP *prptaf(char *, int);
+TafRptP *prptaf2(char *, int);
+TafRptP *prptaf3(char *, int);
+TafRptP *prptaf4(char *, int);
+SAORptP *prpsao(char *, int);
+PRRptP *prppirep(char *, int);
 
 /*********************************************************************/
 /*                                                                   */
@@ -682,48 +615,31 @@ PRRptP   *prppirep(char *, int);
 /*                                                                   */
 /*********************************************************************/
 
-
 typedef struct RRN_device {
 
-	char name[44],
-	     ownerid[8];
+  char name[44], ownerid[8];
 
-	unsigned short dev_addr,
-	         base_cylinder,
-	         base_track,
-	         base_record,
-	         max_cylinder,
-	         max_track,
-	         max_record,
-	         records_per_track,
-	         tracks_per_cylinder,
-	         record_length;
+  unsigned short dev_addr, base_cylinder, base_track, base_record, max_cylinder,
+      max_track, max_record, records_per_track, tracks_per_cylinder,
+      record_length;
 
 } RRN_Device;
 
-
-MDSP_BOOL readrrn(char *device_name,
-                  unsigned int rrn,
-                  void *input_buffer,
+MDSP_BOOL readrrn(char *device_name, unsigned int rrn, void *input_buffer,
                   unsigned int read_count);
 
-MDSP_BOOL writerrn(char *device_name,
-                   unsigned int rrn,
-                   void *output_buffer,
+MDSP_BOOL writerrn(char *device_name, unsigned int rrn, void *output_buffer,
                    unsigned int write_count);
 
 RRN_Device *devinfo(char *device_name);
 
 MDSP_BOOL valid_dn(char *device_name);
 
-
-
 /*********************************************************************/
 /*                                                                   */
 /*  Function prototype for string value test functions.              */
 /*                                                                   */
 /*********************************************************************/
-
 
 int sisalnum(char *);
 int sisalpha(char *);
@@ -773,7 +689,6 @@ char *lstspace(char *, int);
 char *lstupper(char *, int);
 char *lstxdigi(char *, int);
 
-
 /*********************************************************************/
 /*                                                                   */
 /*  Enumeration type and declaration for code form identification    */
@@ -781,31 +696,81 @@ char *lstxdigi(char *, int);
 /*                                                                   */
 /*********************************************************************/
 
-
-typedef
-enum codeform {AIREP, AMDAR, ARFOR, ARMET, BATHY, CLIMAT, CLIMAT_SHIP,
-               CLIMAT_TEMP, CLIMAT_TEMP_SHIP, CODAR, DRIFTER, FC,
-               HYFOR, IAC, IAC_FLEET, ICEAN, METAR, PILOT, PILOT_MOBILE,
-               PILOT_SHIP, RECCO, ROCOB, ROCOB_SHIP, ROFOR, SAO, PIREP,
-               SATEM, SATOB, SHIP, SPECI, SYNOP, TAF, TEMP, TEMP_DROP,
-               TEMP_MOBILE, TEMP_SHIP, TESAC, TRACKOB, WAVEOB,
-               UNKNOWN_FORM, TEMP_A, TEMP_B, TEMP_C, TEMP_D,
-               TEMP_DROP_A, TEMP_DROP_B, TEMP_DROP_C, TEMP_DROP_D,
-               TEMP_MOBILE_A, TEMP_MOBILE_B, TEMP_MOBILE_C,
-               TEMP_MOBILE_D, TEMP_SHIP_A, TEMP_SHIP_B, TEMP_SHIP_C,
-               TEMP_SHIP_D, PILOT_A, PILOT_B, PILOT_C, PILOT_D,
-               PILOT_MOBILE_A, PILOT_MOBILE_B, PILOT_MOBILE_C,
-               PILOT_MOBILE_D, PILOT_SHIP_A, PILOT_SHIP_B,
-               PILOT_SHIP_C, PILOT_SHIP_D
-              }
-CodeForm;
+typedef enum codeform {
+  AIREP,
+  AMDAR,
+  ARFOR,
+  ARMET,
+  BATHY,
+  CLIMAT,
+  CLIMAT_SHIP,
+  CLIMAT_TEMP,
+  CLIMAT_TEMP_SHIP,
+  CODAR,
+  DRIFTER,
+  FC,
+  HYFOR,
+  IAC,
+  IAC_FLEET,
+  ICEAN,
+  METAR,
+  PILOT,
+  PILOT_MOBILE,
+  PILOT_SHIP,
+  RECCO,
+  ROCOB,
+  ROCOB_SHIP,
+  ROFOR,
+  SAO,
+  PIREP,
+  SATEM,
+  SATOB,
+  SHIP,
+  SPECI,
+  SYNOP,
+  TAF,
+  TEMP,
+  TEMP_DROP,
+  TEMP_MOBILE,
+  TEMP_SHIP,
+  TESAC,
+  TRACKOB,
+  WAVEOB,
+  UNKNOWN_FORM,
+  TEMP_A,
+  TEMP_B,
+  TEMP_C,
+  TEMP_D,
+  TEMP_DROP_A,
+  TEMP_DROP_B,
+  TEMP_DROP_C,
+  TEMP_DROP_D,
+  TEMP_MOBILE_A,
+  TEMP_MOBILE_B,
+  TEMP_MOBILE_C,
+  TEMP_MOBILE_D,
+  TEMP_SHIP_A,
+  TEMP_SHIP_B,
+  TEMP_SHIP_C,
+  TEMP_SHIP_D,
+  PILOT_A,
+  PILOT_B,
+  PILOT_C,
+  PILOT_D,
+  PILOT_MOBILE_A,
+  PILOT_MOBILE_B,
+  PILOT_MOBILE_C,
+  PILOT_MOBILE_D,
+  PILOT_SHIP_A,
+  PILOT_SHIP_B,
+  PILOT_SHIP_C,
+  PILOT_SHIP_D
+} CodeForm;
 
 CodeForm idcode(char *);
 
 char *codename(CodeForm);
-CodeForm name2cf ( char * );
-
-
+CodeForm name2cf(char *);
 
 /********************************************************************/
 /*                                                                  */
@@ -814,46 +779,41 @@ CodeForm name2cf ( char * );
 /********************************************************************/
 
 typedef struct mespBltn {
-	Abbrevhdg heading;
-	int reportCount;
-	RptNode *rptList;
-	CodeForm type;
-	MDSP_BOOL valid;
-	short int day;              /* -1 indicates missing/invalid */
-	short int hour;             /* -1 indicates missing/invalid */
-	short int min;              /* -1 indicates missing/invalid */
+  Abbrevhdg heading;
+  int reportCount;
+  RptNode *rptList;
+  CodeForm type;
+  MDSP_BOOL valid;
+  short int day;  /* -1 indicates missing/invalid */
+  short int hour; /* -1 indicates missing/invalid */
+  short int min;  /* -1 indicates missing/invalid */
 } MeSpBltn;
 
-
 typedef struct mespRptP {
-	char locind[4];
-	int groupCount;
-	CodeForm type;
-	char *rptStart;
-	int rptLen;
-	short int day;             /* -1 indicates missing or invalid */
-	short int hour;            /* -1 indicates missing or invalid */
-	short int min;             /* -1 indicates missing or invalid */
-	MDSP_BOOL valid;
+  char locind[4];
+  int groupCount;
+  CodeForm type;
+  char *rptStart;
+  int rptLen;
+  short int day;  /* -1 indicates missing or invalid */
+  short int hour; /* -1 indicates missing or invalid */
+  short int min;  /* -1 indicates missing or invalid */
+  MDSP_BOOL valid;
 } MeSpRptP;
 
-
-MeSpBltn  *pbmesp(char *);
+MeSpBltn *pbmesp(char *);
 
 MeSpRptP *prpmesp(char *, int);
 
-MeSpBltn  *tpbmesp(char *);
+MeSpBltn *tpbmesp(char *);
 
 MeSpRptP *tprpmesp(char *, int);
-
-
 
 /*********************************************************************/
 /*                                                                   */
 /*  String manipulation functions                                    */
 /*                                                                   */
 /*********************************************************************/
-
 
 char *strnlf(char *, size_t);
 char *strnmid(char *, size_t, size_t);
@@ -873,110 +833,59 @@ char *strrtrim(char *, char *);
 char *strtrim(char *, char *);
 char *strvcat(char *, char *, ...);
 
-
-
 /*********************************************************************/
 /*                                                                   */
 /*  Bulletin Generator declarations                                  */
 /*                                                                   */
 /*********************************************************************/
 
-typedef MDSP_BOOL (*ParseBltnFnPtr) ( char *bltn,
-                                      char **rptPtr,
-                                      char *bbbTypePtr,
-                                      char **prefixPtr,
-                                      short *YYPtr,
-                                      short *GGPtr,
-                                      char *bltnTypePtr,
-                                      char **headingPtr );
+typedef MDSP_BOOL (*ParseBltnFnPtr)(char *bltn, char **rptPtr, char *bbbTypePtr,
+                                    char **prefixPtr, short *YYPtr,
+                                    short *GGPtr, char *bltnTypePtr,
+                                    char **headingPtr);
 
-void cbltngen ( ParseBltnFnPtr fnPtr,
-                char *filename,
-                Devaddr *historyDevice,
-                Diskaddr *historyAddr,
-                unsigned * bltnInCountPtr,
-                unsigned * bltnOutCountPtr,
-                unsigned * rptOutCountPtr );
+void cbltngen(ParseBltnFnPtr fnPtr, char *filename, Devaddr *historyDevice,
+              Diskaddr *historyAddr, unsigned *bltnInCountPtr,
+              unsigned *bltnOutCountPtr, unsigned *rptOutCountPtr);
 
-void tbltngen ( ParseBltnFnPtr fnPtr,
-                char *filename,
-                Devaddr *historyDevice,
-                Diskaddr *historyAddr,
-                unsigned * bltnInCountPtr,
-                unsigned * bltnOutCountPtr,
-                unsigned * rptOutCountPtr );
+void tbltngen(ParseBltnFnPtr fnPtr, char *filename, Devaddr *historyDevice,
+              Diskaddr *historyAddr, unsigned *bltnInCountPtr,
+              unsigned *bltnOutCountPtr, unsigned *rptOutCountPtr);
 
-typedef MDSP_BOOL (*ParseBltnFnPtrX) ( char *bltn,
-                                       char **rptPtr,
-                                       char *bbbTypePtr,
-                                       char **prefixPtr,
-                                       short *YYPtr,
-                                       short *GGPtr,
-                                       short *ggPtr,
-                                       char *bltnTypePtr,
-                                       char **headingPtr );
+typedef MDSP_BOOL (*ParseBltnFnPtrX)(char *bltn, char **rptPtr,
+                                     char *bbbTypePtr, char **prefixPtr,
+                                     short *YYPtr, short *GGPtr, short *ggPtr,
+                                     char *bltnTypePtr, char **headingPtr);
 
-void xbltngen ( ParseBltnFnPtrX fnPtr,
-                char *filename,
-                Devaddr *historyDevice,
-                Diskaddr *historyAddr,
-                unsigned * bltnInCountPtr,
-                unsigned * bltnOutCountPtr,
-                unsigned * rptOutCountPtr );
+void xbltngen(ParseBltnFnPtrX fnPtr, char *filename, Devaddr *historyDevice,
+              Diskaddr *historyAddr, unsigned *bltnInCountPtr,
+              unsigned *bltnOutCountPtr, unsigned *rptOutCountPtr);
 
-void dbltngen ( ParseBltnFnPtrX fnPtr,
-                char *filename,
-                Devaddr *historyDevice,
-                Diskaddr *historyAddr,
-                unsigned * bltnInCountPtr,
-                unsigned * bltnOutCountPtr,
-                unsigned * rptOutCountPtr );
+void dbltngen(ParseBltnFnPtrX fnPtr, char *filename, Devaddr *historyDevice,
+              Diskaddr *historyAddr, unsigned *bltnInCountPtr,
+              unsigned *bltnOutCountPtr, unsigned *rptOutCountPtr);
 
-typedef MDSP_BOOL (*OParseBltnFnPtr) ( char *bltn,
-                                       char **rptPtr,
-                                       char *bbbTypePtr,
-                                       char **prefixPtr,
-                                       short *YYPtr,
-                                       short *GGPtr,
-                                       char *bltnTypePtr,
-                                       char **headingPtr,
-                                       char **ccccPtr );
+typedef MDSP_BOOL (*OParseBltnFnPtr)(char *bltn, char **rptPtr,
+                                     char *bbbTypePtr, char **prefixPtr,
+                                     short *YYPtr, short *GGPtr,
+                                     char *bltnTypePtr, char **headingPtr,
+                                     char **ccccPtr);
 
-void obltngen ( OParseBltnFnPtr fnPtr,
-                char *filename,
-                Devaddr *historyDevice,
-                Diskaddr *historyAddr,
-                unsigned * bltnInCountPtr,
-                unsigned * bltnOutCountPtr,
-                unsigned * rptOutCountPtr );
+void obltngen(OParseBltnFnPtr fnPtr, char *filename, Devaddr *historyDevice,
+              Diskaddr *historyAddr, unsigned *bltnInCountPtr,
+              unsigned *bltnOutCountPtr, unsigned *rptOutCountPtr);
 
+void pbltngen(OParseBltnFnPtr fnPtr, char *filename, Devaddr *historyDevice,
+              Diskaddr *historyAddr, unsigned *bltnInCountPtr,
+              unsigned *bltnOutCountPtr, unsigned *rptOutCountPtr);
 
-void pbltngen ( OParseBltnFnPtr fnPtr,
-                char *filename,
-                Devaddr *historyDevice,
-                Diskaddr *historyAddr,
-                unsigned * bltnInCountPtr,
-                unsigned * bltnOutCountPtr,
-                unsigned * rptOutCountPtr );
+void sbltngen(OParseBltnFnPtr fnPtr, char *filename, Devaddr *historyDevice,
+              Diskaddr *historyAddr, unsigned *bltnInCountPtr,
+              unsigned *bltnOutCountPtr, unsigned *rptOutCountPtr);
 
-
-void sbltngen ( OParseBltnFnPtr fnPtr,
-                char *filename,
-                Devaddr *historyDevice,
-                Diskaddr *historyAddr,
-                unsigned * bltnInCountPtr,
-                unsigned * bltnOutCountPtr,
-                unsigned * rptOutCountPtr );
-
-
-void ebltngen ( ParseBltnFnPtr fnPtr,
-                char *filename,
-                Devaddr *historyDevice,
-                Diskaddr *historyAddr,
-                unsigned * bltnInCountPtr,
-                unsigned * bltnOutCountPtr,
-                unsigned * rptOutCountPtr );
-
+void ebltngen(ParseBltnFnPtr fnPtr, char *filename, Devaddr *historyDevice,
+              Diskaddr *historyAddr, unsigned *bltnInCountPtr,
+              unsigned *bltnOutCountPtr, unsigned *rptOutCountPtr);
 
 /*********************************************************************/
 /*                                                                   */
@@ -986,41 +895,35 @@ void ebltngen ( ParseBltnFnPtr fnPtr,
 /*********************************************************************/
 
 typedef struct sw_dir_info_rec {
-	char wmo_header[11];
-	char AFOS_pil[10];
-	char multiple_line;
-	short int line_num;
-	short int recvd_line;
-	char flag1;
-	char flag2;
-	char flag3;
-	short int domestic_cat_num;
-	char afos_tmp;
-	char ccb[2];
-	char region_addr;
-	short int output_line_count;
-	unsigned short trans_line[128];
-	char change_date[3];
-	char dir_flags;
-	Diskaddr history_file_addr;
-	char birth_date[3];
+  char wmo_header[11];
+  char AFOS_pil[10];
+  char multiple_line;
+  short int line_num;
+  short int recvd_line;
+  char flag1;
+  char flag2;
+  char flag3;
+  short int domestic_cat_num;
+  char afos_tmp;
+  char ccb[2];
+  char region_addr;
+  short int output_line_count;
+  unsigned short trans_line[128];
+  char change_date[3];
+  char dir_flags;
+  Diskaddr history_file_addr;
+  char birth_date[3];
 } SwDirInfo;
-
 
 SwDirInfo *rtswdir(char *, int);
 SwDirInfo *rtpswdir(void);
 SwDirInfo *rtnswdir(void);
-
-
-
-
 
 /*********************************************************************/
 /*                                                                   */
 /*  General local functions                                          */
 /*                                                                   */
 /*********************************************************************/
-
 
 int itoc(int, char *, int);
 
@@ -1068,7 +971,7 @@ void rdstaddr(char *, char *);
 
 int wrenaddr(char *, char *);
 
-int vfydigit (char *, int);
+int vfydigit(char *, int);
 
 int readline(char *, int);
 
@@ -1119,7 +1022,7 @@ void decraddr(Diskaddr *, Diskaddr *, Diskaddr *);
 
 char *readrec(Diskaddr *, Devaddr *, int, void *);
 
-int writerec(Diskaddr*, Devaddr *, int, void *);
+int writerec(Diskaddr *, Devaddr *, int, void *);
 
 char prhold(char *, ...);
 
@@ -1140,8 +1043,8 @@ char *strtoeb(char *);
 char *strntoeb(char *, int);
 
 #ifndef _WIN32
-char *lfind(char *, char *, int, int, int(*)(char *, char *));
-char *lsearch(char *, char *, int *, int, int(*)(char *, char *));
+char *lfind(char *, char *, int, int, int (*)(char *, char *));
+char *lsearch(char *, char *, int *, int, int (*)(char *, char *));
 #endif
 
 MDSP_BOOL strcmpw(char *, char *);
@@ -1184,53 +1087,51 @@ char *rgnname(int);
 MDSP_BOOL sysmonms(char *, char *, ...);
 MDSP_BOOL sysmoncl(char *);
 
-short prevndx ( short max, short min, short current );
-short nextndx ( short max, short min, short current );
+short prevndx(short max, short min, short current);
+short nextndx(short max, short min, short current);
 
-time_t extrym ( unsigned day, unsigned hour, unsigned minute );
-time_t extrymd ( unsigned hour, unsigned minute );
+time_t extrym(unsigned day, unsigned hour, unsigned minute);
+time_t extrymd(unsigned hour, unsigned minute);
 
-int cmptimet ( time_t t1, time_t t2 );
+int cmptimet(time_t t1, time_t t2);
 
-int tfprintf ( FILE *, const char *, ... );
+int tfprintf(FILE *, const char *, ...);
 
-MDSP_BOOL purgelog ( char *filename, unsigned short delete_age );
+MDSP_BOOL purgelog(char *filename, unsigned short delete_age);
 
-time_t odbtime ( void );
+time_t odbtime(void);
 
-int bltnpcnt ( char *, int );
-void bltnpage ( char *, int, int );
+int bltnpcnt(char *, int);
+void bltnpage(char *, int, int);
 
-int HEXTOI( char *, int );
+int HEXTOI(char *, int);
 
-char **hdgxref( char * );
+char **hdgxref(char *);
 
-struct tm *zonetime( unsigned short, unsigned short, char );
+struct tm *zonetime(unsigned short, unsigned short, char);
 
-int wordcnt( char * );
-int wordcntn( char *, unsigned int );
+int wordcnt(char *);
+int wordcntn(char *, unsigned int);
 
-char *word( char *, unsigned int );
-char *wordn( char *, unsigned int, unsigned int );
+char *word(char *, unsigned int);
+char *wordn(char *, unsigned int, unsigned int);
 
-char *crlfstrp( char * );
+char *crlfstrp(char *);
 
-MDSP_BOOL charcmp( char *, char * );
+MDSP_BOOL charcmp(char *, char *);
 
-int linecnt( char * );
-int linecntn( char *, unsigned int );
+int linecnt(char *);
+int linecntn(char *, unsigned int);
 
-char *bltline( char *, unsigned int );
-char *bltlinen( char *, unsigned int, unsigned int );
+char *bltline(char *, unsigned int);
+char *bltlinen(char *, unsigned int, unsigned int);
 
-char *pttoline( char *, unsigned int );
-char *pttoword( char *, unsigned int );
+char *pttoline(char *, unsigned int);
+char *pttoword(char *, unsigned int);
 
-char *moblrgn(unsigned short,
-              unsigned short,
-              unsigned short );
+char *moblrgn(unsigned short, unsigned short, unsigned short);
 
-char *nxtgroup( char * );
+char *nxtgroup(char *);
 
 void prtmdade(struct MDAD_data *);
 

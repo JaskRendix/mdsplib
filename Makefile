@@ -20,6 +20,7 @@ OBJS = \
 	src/remark_cloud.o \
 	src/remark_wind_storm.o \
 	src/remark_visibility.o \
+	src/remark_recent_weather.o \
 	src/fracpart.o \
 	src/print_decoded_metar.o \
 	src/stspack2.o \
@@ -58,13 +59,14 @@ tests/%.o: tests/%.c
 src/antoi.o: src/antoi.c src/local.h
 src/charcmp.o: src/charcmp.c src/local.h
 src/decode_metar.o: src/decode_metar.c src/metar_structs.h
-src/decode_metar_remark.o: src/decode_metar_remark.c src/metar_structs.h src/remark_quality_flags.h src/remark_thermal_pressure.h src/remark_precip_snow.h src/remark_cloud.h src/remark_wind_storm.h src/remark_visibility.h
+src/decode_metar_remark.o: src/decode_metar_remark.c src/metar_structs.h src/remark_quality_flags.h src/remark_thermal_pressure.h src/remark_precip_snow.h src/remark_cloud.h src/remark_wind_storm.h src/remark_visibility.h src/remark_recent_weather.h
 src/remark_quality_flags.o: src/remark_quality_flags.c src/remark_quality_flags.h src/metar_structs.h
 src/remark_thermal_pressure.o: src/remark_thermal_pressure.c src/remark_thermal_pressure.h src/metar_structs.h
 src/remark_precip_snow.o: src/remark_precip_snow.c src/remark_precip_snow.h src/metar_structs.h
 src/remark_cloud.o: src/remark_cloud.c src/remark_cloud.h src/metar_structs.h
 src/remark_wind_storm.o: src/remark_wind_storm.c src/remark_wind_storm.h src/metar_structs.h
 src/remark_visibility.o: src/remark_visibility.c src/remark_visibility.h src/metar_structs.h
+src/remark_recent_weather.o: src/remark_recent_weather.c src/remark_recent_weather.h src/metar_structs.h
 src/fracpart.o: src/fracpart.c src/local.h
 src/print_decoded_metar.o: src/print_decoded_metar.c src/metar_structs.h
 src/stspack2.o: src/stspack2.c src/local.h

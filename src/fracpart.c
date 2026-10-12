@@ -18,9 +18,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 #include "metar_structs.h"
-#include <string.h>
 #include <stdlib.h>
- 
+#include <string.h>
+
 /********************************************************************/
 /*                                                                  */
 /*  Title:          fracPart                                        */
@@ -43,44 +43,39 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 /*                  None.                                           */
 /*                                                                  */
 /********************************************************************/
- 
-float fracPart( const char *instring )
-{
-   char buf[ 32 ],
-        *slash;
- 
-   float numerator,
-         denominator;
 
-   size_t len;
+float fracPart(const char *instring) {
+  char buf[32], *slash;
 
-   if (instring == NULL)
-   {
-      return (float)MAXINT;
-   }
- 
-   slash = strchr(instring, '/');
+  float numerator, denominator;
 
-   if (slash == NULL) {
-      return ((float) atoi(instring));
-   }
- 
-   len = (size_t)(slash - instring);
-   if (len >= sizeof(buf)) {
-      /* prevent buffer overflow */
-      return ((float) MAXINT);
-   }
-   
-   memcpy( buf, instring, len );
-   buf[len] = '\0';
- 
-   numerator = (float) atoi(buf);
- 
-   denominator = (float) atoi(slash + 1);
- 
-   if( denominator == 0.0f )
-      return ((float) MAXINT);
-   else
-      return (numerator/denominator);
- 
+  size_t len;
+
+  if (instring == NULL) {
+    return (float)MAXINT;
+  }
+
+  slash = strchr(instring, '/');
+
+  if (slash == NULL) {
+    return ((float)atoi(instring));
+  }
+
+  len = (size_t)(slash - instring);
+  if (len >= sizeof(buf)) {
+    /* prevent buffer overflow */
+    return ((float)MAXINT);
+  }
+
+  memcpy(buf, instring, len);
+  buf[len] = '\0';
+
+  numerator = (float)atoi(buf);
+
+  denominator = (float)atoi(slash + 1);
+
+  if (denominator == 0.0f)
+    return ((float)MAXINT);
+  else
+    return (numerator / denominator);
 }

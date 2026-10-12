@@ -17,8 +17,8 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "local.h"    /* standard header file */
- 
+#include "local.h" /* standard header file */
+
 /********************************************************************/
 /*                                                                  */
 /*  Title:          charcmp                                         */
@@ -45,143 +45,123 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 /*                  None.                                           */
 /*                                                                  */
 /********************************************************************/
-MDSP_BOOL charcmp(char *str, char *pattern)
-{
-    /* Validate input pointers to prevent null dereferences */
-    if (str == NULL || pattern == NULL)
-    {
-        return FALSE;
-    }
+MDSP_BOOL charcmp(char *str, char *pattern) {
+  /* Validate input pointers to prevent null dereferences */
+  if (str == NULL || pattern == NULL) {
+    return FALSE;
+  }
 
-   /* Loop while str and pattern is not equal to null, then  */
-   /* inscreases str and pattern by one                     */
- 
-   for (; *pattern != '\0'; pattern++)
-   {
-      if (*str == '\0')
-         return FALSE;
- 
-      /* If pattern match str, then increase str and jump out the */
-      /* case and read next char of the str and pattern           */
- 
-      if ( isspace((unsigned char)*pattern) )
-         pattern = nxtalpha(pattern);
- 
-      switch( *pattern )
-      {
-         case 'c':
-            if ( !isalnum((unsigned char)*str++) )
-            {
-               return FALSE;
-            }
-            break;
- 
-         case 'a':
-            if ( !isalpha((unsigned char)*str) )
-            {
-               return FALSE;
-            }
-            str++;
-            break;
- 
-         case 'n':
-            if ( !iscntrl((unsigned char)*str++) )
-            {
-               return FALSE;
-            }
-            break;
- 
-         case 'd':
-            if ( !isdigit((unsigned char)*str) )
-            {
-               return FALSE;
-            }
-            str++;
-            break;
- 
-         case 'g':
-            if ( !isgraph((unsigned char)*str++) )
-            {
-               return FALSE;
-            }
-            break;
- 
-         case 'i':
-            if ( !islower((unsigned char)*str++) )
-            {
-               return FALSE;
-            }
-            break;
- 
-         case 'p':
-            if ( !isprint((unsigned char)*str++) )
-            {
-               return FALSE;
-            }
-            break;
- 
-         case 't':
-            if ( !ispunct((unsigned char)*str++) )
-            {
-               return FALSE;
-            }
-            break;
- 
-         case 'w':
-            if ( !isspace((unsigned char)*str++) )
-            {
-               return FALSE;
-            }
-            break;
- 
-         case 'u':
-            if ( !isupper((unsigned char)*str++) )
-            {
-               return FALSE;
-            }
-            break;
- 
-         case 's':
-            if (*str++ != ' ')
-            {
-               return FALSE;
-            }
-            break;
- 
-         case 'm':
-            if ( !isspace((unsigned char)*str) )
-            {
-               return FALSE;
-            }
-            else
-            {
-               while ( isspace((unsigned char)*str) )
-                  str++;
-            }
-            break;
- 
-         case '\'':
-             pattern++;
-         
-             if (*pattern == '\0')
-             {
-                 return FALSE;
-             }
-         
-             if (*pattern != *str)
-             {
-                 return FALSE;
-             }
-         
-             str++;
-             break;
- 
-         default:
-            return FALSE;
- 
-      } /* end switch */
- 
-   } /* end for */
- 
-   return (TRUE);
+  /* Loop while str and pattern is not equal to null, then  */
+  /* inscreases str and pattern by one                     */
+
+  for (; *pattern != '\0'; pattern++) {
+    if (*str == '\0')
+      return FALSE;
+
+    /* If pattern match str, then increase str and jump out the */
+    /* case and read next char of the str and pattern           */
+
+    if (isspace((unsigned char)*pattern))
+      pattern = nxtalpha(pattern);
+
+    switch (*pattern) {
+    case 'c':
+      if (!isalnum((unsigned char)*str++)) {
+        return FALSE;
+      }
+      break;
+
+    case 'a':
+      if (!isalpha((unsigned char)*str)) {
+        return FALSE;
+      }
+      str++;
+      break;
+
+    case 'n':
+      if (!iscntrl((unsigned char)*str++)) {
+        return FALSE;
+      }
+      break;
+
+    case 'd':
+      if (!isdigit((unsigned char)*str)) {
+        return FALSE;
+      }
+      str++;
+      break;
+
+    case 'g':
+      if (!isgraph((unsigned char)*str++)) {
+        return FALSE;
+      }
+      break;
+
+    case 'i':
+      if (!islower((unsigned char)*str++)) {
+        return FALSE;
+      }
+      break;
+
+    case 'p':
+      if (!isprint((unsigned char)*str++)) {
+        return FALSE;
+      }
+      break;
+
+    case 't':
+      if (!ispunct((unsigned char)*str++)) {
+        return FALSE;
+      }
+      break;
+
+    case 'w':
+      if (!isspace((unsigned char)*str++)) {
+        return FALSE;
+      }
+      break;
+
+    case 'u':
+      if (!isupper((unsigned char)*str++)) {
+        return FALSE;
+      }
+      break;
+
+    case 's':
+      if (*str++ != ' ') {
+        return FALSE;
+      }
+      break;
+
+    case 'm':
+      if (!isspace((unsigned char)*str)) {
+        return FALSE;
+      } else {
+        while (isspace((unsigned char)*str))
+          str++;
+      }
+      break;
+
+    case '\'':
+      pattern++;
+
+      if (*pattern == '\0') {
+        return FALSE;
+      }
+
+      if (*pattern != *str) {
+        return FALSE;
+      }
+
+      str++;
+      break;
+
+    default:
+      return FALSE;
+
+    } /* end switch */
+
+  } /* end for */
+
+  return (TRUE);
 }

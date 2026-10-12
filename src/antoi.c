@@ -17,10 +17,9 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+#include <limits.h>
 #include <stdlib.h>
 #include <string.h>
-#include <limits.h>
- 
 
 /********************************************************************/
 /*                                                                  */
@@ -50,27 +49,26 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 /*                 None                                             */
 /*                                                                  */
 /********************************************************************/
- 
-int antoi(const char *string, int len)
-{
-    char *tmpstr;
-    int retval;
 
-    if (string == NULL || len < 0)
-        return INT_MIN;
+int antoi(const char *string, int len) {
+  char *tmpstr;
+  int retval;
 
-    tmpstr = malloc((size_t)len + 1);
+  if (string == NULL || len < 0)
+    return INT_MIN;
 
-    if (tmpstr == NULL)
-        return INT_MIN;
+  tmpstr = malloc((size_t)len + 1);
 
-    memcpy(tmpstr, string, (size_t)len);
-    tmpstr[len] = '\0';
+  if (tmpstr == NULL)
+    return INT_MIN;
 
-    retval = atoi(tmpstr);
+  memcpy(tmpstr, string, (size_t)len);
+  tmpstr[len] = '\0';
 
-    free(tmpstr);
+  retval = atoi(tmpstr);
 
-    return retval;
- 
+  free(tmpstr);
+
+  return retval;
+
 } /* end antoi */

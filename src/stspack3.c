@@ -17,8 +17,8 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "local.h"     /* standard header file */
- 
+#include "local.h" /* standard header file */
+
 /********************************************************************/
 /*                                                                  */
 /*  Title:          stspack3                                        */
@@ -87,143 +87,133 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 /*                                                                  */
 /********************************************************************/
 char *nxtalnum(char *s) {
- 
-   if (s == NULL)
-      return NULL;
 
-   for (; *s && !isalnum((unsigned char)*s); s++)
-      ;
+  if (s == NULL)
+    return NULL;
 
-   return *s ? s : NULL;
- 
+  for (; *s && !isalnum((unsigned char)*s); s++)
+    ;
+
+  return *s ? s : NULL;
+
 } /* end nxtalnum */
- 
- 
+
 char *nxtalpha(char *s) {
- 
-   if (s == NULL)
-      return NULL;
 
-   for (; *s && !isalpha((unsigned char)*s); s++)
-      ;
+  if (s == NULL)
+    return NULL;
 
-   return *s ? s : NULL;
- 
+  for (; *s && !isalpha((unsigned char)*s); s++)
+    ;
+
+  return *s ? s : NULL;
+
 } /* end nxtalpha */
- 
- 
+
 char *nxtcntrl(char *s) {
- 
-   if (s == NULL)
-      return NULL;
 
-   for (; *s && !iscntrl((unsigned char)*s); s++)
-      ;
+  if (s == NULL)
+    return NULL;
 
-   return *s ? s : NULL;
- 
+  for (; *s && !iscntrl((unsigned char)*s); s++)
+    ;
+
+  return *s ? s : NULL;
+
 } /* end nxtcntrl */
- 
- 
+
 char *nxtdigit(char *s) {
- 
-   if (s == NULL)
-      return NULL;
 
-   for (; *s && !isdigit((unsigned char)*s); s++)
-      ;
+  if (s == NULL)
+    return NULL;
 
-   return *s ? s : NULL;
- 
+  for (; *s && !isdigit((unsigned char)*s); s++)
+    ;
+
+  return *s ? s : NULL;
+
 } /* end nxtdigit */
- 
- 
+
 char *nxtgraph(char *s) {
- 
-   if (s == NULL)
-      return NULL;
 
-   for (; *s && !isgraph((unsigned char)*s); s++)
-      ;
+  if (s == NULL)
+    return NULL;
 
-   return *s ? s : NULL;
- 
+  for (; *s && !isgraph((unsigned char)*s); s++)
+    ;
+
+  return *s ? s : NULL;
+
 } /* end nxtgraph */
- 
- 
+
 char *nxtlower(char *s) {
- 
-   if (s == NULL)
-      return NULL;
 
-   for (; *s && !islower((unsigned char)*s); s++)
-      ;
+  if (s == NULL)
+    return NULL;
 
-   return *s ? s : NULL;
- 
+  for (; *s && !islower((unsigned char)*s); s++)
+    ;
+
+  return *s ? s : NULL;
+
 } /* end nxtlower */
- 
- 
+
 char *nxtprint(char *s) {
- 
-   if (s == NULL)
-      return NULL;
 
-   for (; *s && !isprint((unsigned char)*s); s++)
-      ;
+  if (s == NULL)
+    return NULL;
 
-   return *s ? s : NULL;
- 
+  for (; *s && !isprint((unsigned char)*s); s++)
+    ;
+
+  return *s ? s : NULL;
+
 } /* end nxtprint */
- 
- 
+
 char *nxtpunct(char *s) {
- 
-   if (s == NULL)
-      return NULL;
 
-   for (; *s && !ispunct((unsigned char)*s); s++)
-      ;
+  if (s == NULL)
+    return NULL;
 
-   return *s ? s : NULL;
- 
+  for (; *s && !ispunct((unsigned char)*s); s++)
+    ;
+
+  return *s ? s : NULL;
+
 } /* end nxtpunct */
- 
- 
+
 char *nxtspace(char *s) {
- 
-   if (s == NULL)
-      return NULL;
 
-   for (; *s && !isspace((unsigned char)*s); s++)
-      ;
+  if (s == NULL)
+    return NULL;
 
-   return *s ? s : NULL;
- 
+  for (; *s && !isspace((unsigned char)*s); s++)
+    ;
+
+  return *s ? s : NULL;
+
 } /* end nxtspace */
- 
- 
+
 char *nxtupper(char *s) {
- 
-   if (s == NULL)
-      return NULL;
 
-   for (; *s && !isupper((unsigned char)*s); s++)
-      ;
+  if (s == NULL)
+    return NULL;
 
-   return *s ? s : NULL;
- 
+  for (; *s && !isupper((unsigned char)*s); s++)
+    ;
+
+  return *s ? s : NULL;
+
 } /* end nxtupper */
- 
-  
+
 char *nxtxdigi(char *s) {
- 
-   if (s == NULL)
-      return NULL;
 
-   for (; *s && !isxdigit((unsigned char)*s); s++)
-      ;
+  if (s == NULL)
+    return NULL;
 
-   return *s ? s : NULL;
- 
+  for (; *s && !isxdigit((unsigned char)*s); s++)
+    ;
+
+  return *s ? s : NULL;
+
 } /* end nxtxdigi */
