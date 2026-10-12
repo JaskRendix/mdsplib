@@ -17,6 +17,7 @@ add_library(metar STATIC
     src/remark_quality_flags.c
     src/remark_thermal_pressure.c
     src/remark_precip_snow.c
+    src/remark_cloud.c
     src/fracpart.c
     src/print_decoded_metar.c
     src/stspack2.c
