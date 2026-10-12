@@ -225,48 +225,26 @@ static int test_duplicate_flag_reset(void)
 
 int main(void)
 {
-    printf("test_no_rmk\n");
-    fflush(stdout);
     CHECK(test_no_rmk());
 
-    printf("test_ao2\n");
-    fflush(stdout);
     CHECK(test_ao2());
 
-    printf("test_presfr\n");
-    fflush(stdout);
     CHECK(test_presfr());
 
-    printf("test_presrr\n");
-    fflush(stdout);
     CHECK(test_presrr());
 
-    printf("test_pwino\n");
-    fflush(stdout);
     CHECK(test_pwino());
 
-    printf("test_fzrano\n");
-    fflush(stdout);
     CHECK(test_fzrano());
 
-    printf("test_tsno\n");
-    fflush(stdout);
     CHECK(test_tsno());
 
-    printf("test_pno\n");
-    fflush(stdout);
     CHECK(test_pno());
 
-    printf("test_rvrno\n");
-    fflush(stdout);
     CHECK(test_rvrno());
 
-    printf("test_dollar_sign\n");
-    fflush(stdout);
     CHECK(test_dollar_sign());
 
-    printf("test_duplicate_flag_reset\n");
-    fflush(stdout);
     CHECK(test_duplicate_flag_reset());
 
     printf("decode_metar_remark tests passed\n");
