@@ -1,5 +1,4 @@
-![Linux CI](https://github.com/flightaware/mdsplib/workflows/Linux%20CI/badge.svg)
-![Windows CI](https://github.com/flightaware/mdsplib/workflows/Windows%20CI/badge.svg)
+![CI](https://github.com/flightaware/mdsplib/actions/workflows/ci.yml/badge.svg)
 
 METAR Decoder Software Package Library
 ===
