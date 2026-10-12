@@ -17,9 +17,18 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+#include "metar_structs.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+
+#ifdef SYNOPTIC
+char *BldSynop(Decoded_METAR *, char *);
+#endif
+
+void print_decoded_metar(Decoded_METAR *);
+int decode_metar(const char *, Decoded_METAR *);
 
 int runTest(void)
 {
