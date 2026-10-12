@@ -21,77 +21,80 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  
 /********************************************************************/
 /*                                                                  */
-/*  Title:         stspack2                                         */
-/*  Organization:  W/OSO242 - GRAPHICS AND DISPLAY SECTION          */
-/*  Date:          05 Oct 1992                                      */
-/*  Programmer:    ALLAN DARLING                                    */
-/*  Language:      C/2                                              */
+/*  Title:          stspack2                                        */
+/*  Organization:   W/OSO242 - GRAPHICS AND DISPLAY SECTION         */
+/*  Date:           05 Oct 1992                                     */
+/*  Programmer:     ALLAN DARLING                                   */
+/*  Language:       C/2                                             */
 /*                                                                  */
-/*  Abstract:      The stspack2 package contains functions to       */
-/*                 perform the isalnum through isxdigit functions   */
-/*                 on strings.  The functions come in four forms:   */
-/*                 those that test NULL delimited strings and are   */
-/*                 named in the form sxxxxxxx, those that test at   */
-/*                 most n characters and are named in the form      */
-/*                 nxxxxxxx, those that search forward in a string  */
-/*                 and are named in the form nxtyyyyy, and those    */
-/*                 that search backward in a string and are named   */
-/*                 in the form lstyyyyy.                            */
+/*  Abstract:       The stspack2 package contains functions to      */
+/*                  perform the isalnum through isxdigit functions  */
+/*                  on strings.  The functions come in four forms:  */
+/*                  those that test NULL delimited strings and are  */
+/*                  named in the form sxxxxxxx, those that test at  */
+/*                  most n characters and are named in the form     */
+/*                  nxxxxxxx, those that search forward in a string */
+/*                  and are named in the form nxtyyyyy, and those   */
+/*                  that search backward in a string and are named  */
+/*                  in the form lstyyyyy.                           */
 /*                                                                  */
-/*                 The xxxxxxx is the name of the test applied to   */
-/*                 each character in the string, such as isalpha,   */
-/*                 thus a function to test a NULL delimited string  */
-/*                 an return a nonzero value if all characters in   */
-/*                 the string are digits is named sisdigit.         */
+/*                  The xxxxxxx is the name of the test applied to  */
+/*                  each character in the string, such as isalpha,  */
+/*                  thus a function to test a NULL delimited string */
+/*                  an return a nonzero value if all characters in  */
+/*                  the string are digits is named sisdigit.        */
 /*                                                                  */
-/*                 The yyyyy is the name of the test applied to     */
-/*                 characters in a string, minus the 'is' prefix.   */
-/*                 Thus a function to find the next digit in a NULL */
-/*                 delimited string and return a pointer to it is   */
-/*                 named nxtdigit.                                  */
+/*                  The yyyyy is the name of the test applied to    */
+/*                  characters in a string, minus the 'is' prefix.  */
+/*                  Thus a function to find the next digit in a NULL */
+/*                  delimited string and return a pointer to it is  */
+/*                  named nxtdigit.                                 */
 /*                                                                  */
-/*                 The only exception to the naming rule is for the */
-/*                 functions that test for hexadecimal digits.      */
-/*                 These are named sisxdigi, nisxdigi, nxtxdigi,    */
-/*                 and lstxdigi because of the eight character      */
-/*                 function name limitation.                        */
+/*                  The only exception to the naming rule is for the */
+/*                  functions that test for hexadecimal digits.     */
+/*                  These are named sisxdigi, nisxdigi, nxtxdigi,   */
+/*                  and lstxdigi because of the eight character     */
+/*                  function name limitation.                       */
 /*                                                                  */
-/*                 The nxxxxxxx class of functions will test up to  */
-/*                 n characters or the first NULL character         */
-/*                 encountered, whichever comes first.  For all     */
-/*                 classes of functions, the string sentinal is     */
-/*                 not included in the test.                        */
+/*                  The nxxxxxxx class of functions will test up to */
+/*                  n characters or the first NULL character        */
+/*                  encountered, whichever comes first.  For all    */
+/*                  classes of functions, the string sentinal is    */
+/*                  not included in the test.                       */
 /*                                                                  */
 /*  External Functions Called:                                      */
-/*                 isalnum, isalpha, iscntrl, isdigit, isgraph,     */
-/*                 islower, isprint, ispunct, isspace, isupper,     */
-/*                 isxdigit.                                        */
+/*                  isalnum, isalpha, iscntrl, isdigit, isgraph,      */
+/*                  islower, isprint, ispunct, isspace, isupper,    */
+/*                  isxdigit.                                       */
 /*                                                                  */
-/*  Input:         For sxxxxxxx class functions, a pointer to a     */
-/*                 NULL delimited character string.                 */
+/*  Input:          For sxxxxxxx class functions, a pointer to a    */
+/*                  NULL delimited character string.                */
 /*                                                                  */
-/*                 For nxtyyyyy class functions, a pointer to a     */
-/*                 NULL delimited character string.                 */
+/*                  For nxtyyyyy class functions, a pointer to a    */
+/*                  NULL delimited character string.                */
 /*                                                                  */
-/*                 for nxxxxxxx class functions, a pointer to a     */
-/*                 character array, and a positive, nonzero integer.*/
+/*                  for nxxxxxxx class functions, a pointer to a    */
+/*                  character array, and a positive, nonzero integer.*/
 /*                                                                  */
-/*                 for lstyyyyy class functions, a pointer to a     */
-/*                 character array, and a positive, nonzero integer.*/
+/*                  for lstyyyyy class functions, a pointer to a    */
+/*                  character array, and a positive, nonzero integer.*/
 /*                                                                  */
-/*  Output:        A nonzero value if the test is true for all      */
-/*                 characters in the string, a zero value otherwise.*/
+/*  Output:         A nonzero value if the test is true for all     */
+/*                  characters in the string, a zero value otherwise.*/
 /*                                                                  */
 /*  Modification History:                                           */
-/*                 None.                                            */
+/*                  None.                                           */
 /*                                                                  */
 /********************************************************************/
  
 int nisalnum(char *s, int n) {
  
+   if (s == NULL)
+      return (0);
+
    for (; *s && n; s++, n--)
  
-      if (!isalnum(*s))
+      if (!isalnum((unsigned char)*s))
          return (0);
  
    return (1);
@@ -101,9 +104,12 @@ int nisalnum(char *s, int n) {
  
 int nisalpha(char *s, int n) {
  
+   if (s == NULL)
+      return (0);
+
    for (; *s && n; s++, n--)
  
-      if (!isalpha(*s))
+      if (!isalpha((unsigned char)*s))
          return (0);
  
    return (1);
@@ -113,9 +119,12 @@ int nisalpha(char *s, int n) {
  
 int niscntrl(char *s, int n) {
  
+   if (s == NULL)
+      return (0);
+
    for (; *s && n; s++, n--)
  
-      if (!iscntrl(*s))
+      if (!iscntrl((unsigned char)*s))
          return (0);
  
    return (1);
@@ -125,9 +134,12 @@ int niscntrl(char *s, int n) {
  
 int nisdigit(char *s, int n) {
  
+   if (s == NULL)
+      return (0);
+
    for (; *s && n; s++, n--)
  
-      if (!isdigit(*s))
+      if (!isdigit((unsigned char)*s))
          return (0);
  
    return (1);
@@ -137,9 +149,12 @@ int nisdigit(char *s, int n) {
  
 int nisgraph(char *s, int n) {
  
+   if (s == NULL)
+      return (0);
+
    for (; *s && n; s++, n--)
  
-      if (!isgraph(*s))
+      if (!isgraph((unsigned char)*s))
          return (0);
  
    return (1);
@@ -149,9 +164,12 @@ int nisgraph(char *s, int n) {
  
 int nislower(char *s, int n) {
  
+   if (s == NULL)
+      return (0);
+
    for (; *s && n; s++, n--)
  
-      if (!islower(*s))
+      if (!islower((unsigned char)*s))
          return (0);
  
    return (1);
@@ -161,9 +179,12 @@ int nislower(char *s, int n) {
  
 int nisprint(char *s, int n) {
  
+   if (s == NULL)
+      return (0);
+
    for (; *s && n; s++, n--)
  
-      if (!isprint(*s))
+      if (!isprint((unsigned char)*s))
          return (0);
  
    return (1);
@@ -173,9 +194,12 @@ int nisprint(char *s, int n) {
  
 int nispunct(char *s, int n) {
  
+   if (s == NULL)
+      return (0);
+
    for (; *s && n; s++, n--)
  
-      if (!ispunct(*s))
+      if (!ispunct((unsigned char)*s))
          return (0);
  
    return (1);
@@ -185,9 +209,12 @@ int nispunct(char *s, int n) {
  
 int nisspace(char *s, int n) {
  
+   if (s == NULL)
+      return (0);
+
    for (; *s && n; s++, n--)
  
-      if (!isspace(*s))
+      if (!isspace((unsigned char)*s))
          return (0);
  
    return (1);
@@ -197,9 +224,12 @@ int nisspace(char *s, int n) {
  
 int nisupper(char *s, int n) {
  
+   if (s == NULL)
+      return (0);
+
    for (; *s && n; s++, n--)
  
-      if (!isupper(*s))
+      if (!isupper((unsigned char)*s))
          return (0);
  
    return (1);
@@ -209,13 +239,14 @@ int nisupper(char *s, int n) {
  
 int nisxdigi(char *s, int n) {
  
+   if (s == NULL)
+      return (0);
+
    for (; *s && n; s++, n--)
  
-      if (!isxdigit(*s))
+      if (!isxdigit((unsigned char)*s))
          return (0);
  
    return (1);
  
 } /* end nisxdigi */
- 
-// vim: set ts=4 sw=4 sts=4 noet :
