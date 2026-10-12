@@ -18,6 +18,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 #include <stdlib.h>
+#include <string.h>
+#include <limits.h>
  
 
 /********************************************************************/
@@ -49,27 +51,26 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 /*                                                                  */
 /********************************************************************/
  
-int antoi(char * string, int len)
+int antoi(const char *string, int len)
 {
-    char * tmpstr;
-    int i, retval;
- 
-    tmpstr = malloc((len+1) * sizeof(char));
- 
-    if (tmpstr == NULL) return (-2147483648);
- 
-    for (i = 0; i < len; i++)
-       tmpstr[i] = string[i];
- 
+    char *tmpstr;
+    int retval;
+
+    if (string == NULL || len < 0)
+        return INT_MIN;
+
+    tmpstr = malloc((size_t)len + 1);
+
+    if (tmpstr == NULL)
+        return INT_MIN;
+
+    memcpy(tmpstr, string, (size_t)len);
     tmpstr[len] = '\0';
- 
+
     retval = atoi(tmpstr);
- 
+
     free(tmpstr);
- 
-    return(retval);
+
+    return retval;
  
 } /* end antoi */
- 
-
-// vim: set ts=4 sw=4 sts=4 noet :
