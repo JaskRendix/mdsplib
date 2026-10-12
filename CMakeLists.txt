@@ -19,6 +19,7 @@ add_library(metar STATIC
     src/remark_precip_snow.c
     src/remark_cloud.c
     src/remark_wind_storm.c
+    src/remark_visibility.c
     src/fracpart.c
     src/print_decoded_metar.c
     src/stspack2.c
