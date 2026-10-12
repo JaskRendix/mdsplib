@@ -12,62 +12,56 @@ int nisspace(char *, int);
 int nisupper(char *, int);
 int nisxdigi(char *, int);
 
+#define CHECK(expr) \
+    do { \
+        if (!(expr)) { \
+            fprintf(stderr, "FAILED: %s (line %d)\n", \
+                    #expr, __LINE__); \
+            return 0; \
+        } \
+    } while (0)
+
 static int test_stspack2(void)
 {
-    /* NULL handling */
-    if (nisalnum(NULL, 1) != 0) return 0;
-    if (nisalpha(NULL, 1) != 0) return 0;
-    if (nisdigit(NULL, 1) != 0) return 0;
+    CHECK(nisalnum(NULL, 1) == 0);
+    CHECK(nisalpha(NULL, 1) == 0);
+    CHECK(nisdigit(NULL, 1) == 0);
 
-    /* alnum */
-    if (!nisalnum("Ab12", 4)) return 0;
-    if (nisalnum("Ab$2", 4)) return 0;
+    CHECK(nisalnum("Ab12", 4));
+    CHECK(!nisalnum("Ab$2", 4));
 
-    /* alpha */
-    if (!nisalpha("AbCd", 4)) return 0;
-    if (nisalpha("Ab1d", 4)) return 0;
+    CHECK(nisalpha("AbCd", 4));
+    CHECK(!nisalpha("Ab1d", 4));
 
-    /* digit */
-    if (!nisdigit("1234", 4)) return 0;
-    if (nisdigit("12A4", 4)) return 0;
+    CHECK(nisdigit("1234", 4));
+    CHECK(!nisdigit("12A4", 4));
 
-    /* lower */
-    if (!nislower("abcd", 4)) return 0;
-    if (nislower("abCd", 4)) return 0;
+    CHECK(nislower("abcd", 4));
+    CHECK(!nislower("abCd", 4));
 
-    /* upper */
-    if (!nisupper("ABCD", 4)) return 0;
-    if (nisupper("ABCd", 4)) return 0;
+    CHECK(nisupper("ABCD", 4));
+    CHECK(!nisupper("ABCd", 4));
 
-    /* hex digit */
-    if (!nisxdigi("ABCDEF012345", 12)) return 0;
-    if (nisxdigi("ABCXYZ", 6)) return 0;
+    CHECK(nisxdigi("ABCDEF012345", 12));
+    CHECK(!nisxdigi("ABCXYZ", 6));
 
-    /* punctuation */
-    if (!nispunct("!?.", 3)) return 0;
-    if (nispunct("!A.", 3)) return 0;
+    CHECK(nispunct("!?.", 3));
+    CHECK(!nispunct("!A.", 3));
 
-    /* space */
-    if (!nisspace(" \t\n", 3)) return 0;
-    if (nisspace(" A ", 3)) return 0;
+    CHECK(nisspace(" \t\n", 3));
+    CHECK(!nisspace(" A ", 3));
 
-    /* printable */
-    if (!nisprint("ABC123", 6)) return 0;
+    CHECK(nisprint("ABC123", 6));
 
-    /* graph */
-    if (!nisgraph("ABC123", 6)) return 0;
-    if (nisgraph("ABC 123", 7)) return 0;
+    CHECK(nisgraph("ABC123", 6));
+    CHECK(!nisgraph("ABC 123", 7));
 
-    /* control */
     {
         char ctrl[] = "\n\r\t";
-        if (!niscntrl(ctrl, 3))
-            return 0;
+        CHECK(niscntrl(ctrl, 3));
     }
 
-    /* verify n parameter */
-    if (!nisdigit("123A", 3))
-        return 0;
+    CHECK(nisdigit("123A", 3));
 
     return 1;
 }
