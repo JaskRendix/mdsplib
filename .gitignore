@@ -6,6 +6,7 @@ build/
 
 antoi_test
 charcmp_test
+decode_metar_remark_test
 decode_metar_test
 fracpart_test
 metar_test
