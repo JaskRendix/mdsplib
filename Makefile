@@ -30,6 +30,7 @@ TESTS = \
 	metar_test \
 	antoi_test \
 	charcmp_test \
+	decode_metar_test \
 	fracpart_test \
 	print_decoded_metar_test \
 	stspack2_test \
