@@ -1,6 +1,13 @@
 *.a
-src/*.o
-metar_test
+*.o
 metar_test.exe
 build/
 .vscode/
+
+antoi_test
+charcmp_test
+fracpart_test
+metar_test
+print_decoded_metar_test
+stspack2_test
+stspack3_test

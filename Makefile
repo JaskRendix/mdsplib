@@ -4,7 +4,7 @@ CC ?= gcc
 AR ?= ar
 
 CFLAGS ?= -g -O2 -fPIC
-CPPFLAGS += -Isrc
+CPPFLAGS += -Isrc -Iinclude
 ARFLAGS ?= ruv
 
 LIBS =
