@@ -13,6 +13,15 @@ char *nxtspace(char *);
 char *nxtupper(char *);
 char *nxtxdigi(char *);
 
+#define CHECK(expr) \
+    do { \
+        if (!(expr)) { \
+            fprintf(stderr, "FAILED: %s (line %d)\n", \
+                    #expr, __LINE__); \
+            return 0; \
+        } \
+    } while (0)
+
 static int test_stspack3(void)
 {
     char s1[] = "***ABC";
@@ -21,66 +30,39 @@ static int test_stspack3(void)
     char s4[] = "abcDEF";
     char s5[] = "!!!abc";
     char s6[] = "   abc";
-    char s7[] = "XYZabc";
     char s8[] = "++A9";
 
-    /* NULL handling */
-    if (nxtalpha(NULL) != NULL)
-        return 0;
+    CHECK(nxtalpha(NULL) == NULL);
+    CHECK(nxtdigit(NULL) == NULL);
 
-    if (nxtdigit(NULL) != NULL)
-        return 0;
+    CHECK(strcmp(nxtalnum(s1), "ABC") == 0);
+    CHECK(strcmp(nxtalpha(s1), "ABC") == 0);
 
-    /* nxtalnum */
-    if (strcmp(nxtalnum(s1), "ABC") != 0)
-        return 0;
+    CHECK(strcmp(nxtdigit(s2), "123ABC") == 0);
 
-    /* nxtalpha */
-    if (strcmp(nxtalpha(s1), "ABC") != 0)
-        return 0;
+    CHECK(nxtcntrl(s3) == s3);
 
-    /* nxtdigit */
-    if (strcmp(nxtdigit(s2), "123ABC") != 0)
-        return 0;
+    CHECK(strcmp(nxtlower(s4), "abcDEF") == 0);
+    CHECK(strcmp(nxtupper(s4), "DEF") == 0);
 
-    /* nxtcntrl */
-    if (nxtcntrl(s3) != s3)
-        return 0;
+    CHECK(strcmp(nxtpunct(s5), "!!!abc") == 0);
 
-    /* nxtlower */
-    if (strcmp(nxtlower(s4), "abcDEF") != 0)
-        return 0;
+    CHECK(nxtspace(s6) == s6);
 
-    /* nxtupper */
-    if (strcmp(nxtupper(s4), "DEF") != 0)
-        return 0;
+    CHECK(strcmp(nxtgraph(s6), "abc") == 0);
 
-    /* nxtpunct */
-    if (strcmp(nxtpunct(s5), "!!!abc") != 0)
-        return 0;
+    /*
+     * isprint() returns true for spaces,
+     * so nxtprint("   abc") should return s6,
+     * not "abc".
+     */
+    CHECK(nxtprint(s6) == s6);
 
-    /* nxtspace */
-    if (nxtspace(s6) != s6)
-        return 0;
+    CHECK(strcmp(nxtxdigi(s8), "A9") == 0);
 
-    /* nxtgraph */
-    if (strcmp(nxtgraph(s6), "abc") != 0)
-        return 0;
-
-    /* nxtprint */
-    if (strcmp(nxtprint(s6), "abc") != 0)
-        return 0;
-
-    /* nxtxdigi */
-    if (strcmp(nxtxdigi(s8), "A9") != 0)
-        return 0;
-
-    /* not found */
     {
         char no_digits[] = "ABCDE";
-
-        if (nxtdigit(no_digits) != NULL)
-            return 0;
+        CHECK(nxtdigit(no_digits) == NULL);
     }
 
     return 1;
