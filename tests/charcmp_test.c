@@ -4,116 +4,63 @@
 
 MDSP_BOOL charcmp(char *str, char *pattern);
 
+#define CHECK(expr) \
+    do { \
+        if (!(expr)) { \
+            fprintf(stderr, "FAILED: %s (line %d)\n", \
+                    #expr, __LINE__); \
+            return 0; \
+        } \
+    } while (0)
+
 static int test_charcmp(void)
 {
-    /* NULL checks */
-    if (charcmp(NULL, "a") != FALSE)
-        return 0;
+    CHECK(charcmp(NULL, "a") == FALSE);
+    CHECK(charcmp("A", NULL) == FALSE);
 
-    if (charcmp("A", NULL) != FALSE)
-        return 0;
+    CHECK(charcmp("A", "a") == TRUE);
+    CHECK(charcmp("1", "a") == FALSE);
 
-    /* a = alphabetic */
-    if (charcmp("A", "a") != TRUE)
-        return 0;
+    CHECK(charcmp("5", "d") == TRUE);
+    CHECK(charcmp("A", "d") == FALSE);
 
-    if (charcmp("1", "a") != FALSE)
-        return 0;
+    CHECK(charcmp("A", "c") == TRUE);
+    CHECK(charcmp("5", "c") == TRUE);
+    CHECK(charcmp("@", "c") == FALSE);
 
-    /* d = digit */
-    if (charcmp("5", "d") != TRUE)
-        return 0;
+    CHECK(charcmp("a", "i") == TRUE);
+    CHECK(charcmp("A", "i") == FALSE);
 
-    if (charcmp("A", "d") != FALSE)
-        return 0;
+    CHECK(charcmp("A", "u") == TRUE);
+    CHECK(charcmp("a", "u") == FALSE);
 
-    /* c = alphanumeric */
-    if (charcmp("A", "c") != TRUE)
-        return 0;
+    CHECK(charcmp(" ", "s") == TRUE);
+    CHECK(charcmp("A", "s") == FALSE);
 
-    if (charcmp("5", "c") != TRUE)
-        return 0;
+    CHECK(charcmp("\t", "w") == TRUE);
+    CHECK(charcmp("A", "w") == FALSE);
 
-    if (charcmp("@", "c") != FALSE)
-        return 0;
+    CHECK(charcmp("   ", "m") == TRUE);
+    CHECK(charcmp("\t\t", "m") == TRUE);
+    CHECK(charcmp("A", "m") == FALSE);
 
-    /* i = lowercase */
-    if (charcmp("a", "i") != TRUE)
-        return 0;
+    CHECK(charcmp("!", "t") == TRUE);
+    CHECK(charcmp("A", "t") == FALSE);
 
-    if (charcmp("A", "i") != FALSE)
-        return 0;
+    CHECK(charcmp("A", "p") == TRUE);
 
-    /* u = uppercase */
-    if (charcmp("A", "u") != TRUE)
-        return 0;
+    CHECK(charcmp("A", "g") == TRUE);
+    CHECK(charcmp(" ", "g") == FALSE);
 
-    if (charcmp("a", "u") != FALSE)
-        return 0;
+    CHECK(charcmp("X", "'X") == TRUE);
+    CHECK(charcmp("Y", "'X") == FALSE);
 
-    /* s = literal space */
-    if (charcmp(" ", "s") != TRUE)
-        return 0;
+    CHECK(charcmp("Ab3", "aad") == TRUE);
+    CHECK(charcmp("A33", "aad") == FALSE);
 
-    if (charcmp("A", "s") != FALSE)
-        return 0;
+    CHECK(charcmp("", "a") == FALSE);
 
-    /* w = any whitespace */
-    if (charcmp("\t", "w") != TRUE)
-        return 0;
-
-    if (charcmp("A", "w") != FALSE)
-        return 0;
-
-    /* m = one or more whitespace */
-    if (charcmp("   ", "m") != TRUE)
-        return 0;
-
-    if (charcmp("\t\t", "m") != TRUE)
-        return 0;
-
-    if (charcmp("A", "m") != FALSE)
-        return 0;
-
-    /* t = punctuation */
-    if (charcmp("!", "t") != TRUE)
-        return 0;
-
-    if (charcmp("A", "t") != FALSE)
-        return 0;
-
-    /* p = printable */
-    if (charcmp("A", "p") != TRUE)
-        return 0;
-
-    /* g = graphical */
-    if (charcmp("A", "g") != TRUE)
-        return 0;
-
-    if (charcmp(" ", "g") != FALSE)
-        return 0;
-
-    /* quoted literal */
-    if (charcmp("X", "'X") != TRUE)
-        return 0;
-
-    if (charcmp("Y", "'X") != FALSE)
-        return 0;
-
-    /* multiple pattern elements */
-    if (charcmp("Ab3", "aad") != TRUE)
-        return 0;
-
-    if (charcmp("A33", "aad") != FALSE)
-        return 0;
-
-    /* short string */
-    if (charcmp("", "a") != FALSE)
-        return 0;
-
-    /* invalid pattern */
-    if (charcmp("A", "z") != FALSE)
-        return 0;
+    CHECK(charcmp("A", "z") == FALSE);
 
     return 1;
 }
