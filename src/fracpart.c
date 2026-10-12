@@ -18,27 +18,29 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 #include "metar_structs.h"
+#include <string.h>
+#include <stdlib.h>
  
 /********************************************************************/
 /*                                                                  */
-/*  Title:         fracPart                                         */
-/*  Organization:  W/OSO242 - GRAPHICS AND DISPLAY SECTION          */
-/*  Date:          13 Jun 1995                                      */
-/*  Programmer:    CARL MCCALLA                                     */
-/*  Language:      C/370                                            */
+/*  Title:          fracPart                                        */
+/*  Organization:   W/OSO242 - GRAPHICS AND DISPLAY SECTION         */
+/*  Date:           13 Jun 1995                                     */
+/*  Programmer:     CARL MCCALLA                                    */
+/*  Language:       C/370                                           */
 /*                                                                  */
-/*  Abstract:      Convert a character string fraction into a       */
-/*                 decimal (floating point) number.                 */
+/*  Abstract:       Convert a character string fraction into a      */
+/*                  decimal (floating point) number.                */
 /*                                                                  */
 /*  External Functions Called:                                      */
-/*                 None.                                            */
+/*                  None.                                           */
 /*                                                                  */
-/*  Input:         string - a pointer to a character string frac-   */
+/*  Input:          string - a pointer to a character string frac-  */
 /*                          tion.                                   */
-/*  Output:        A decimal (floating point) number.               */
+/*  Output:         A decimal (floating point) number.              */
 /*                                                                  */
 /*  Modification History:                                           */
-/*                 None.                                            */
+/*                  None.                                           */
 /*                                                                  */
 /********************************************************************/
  
@@ -49,29 +51,36 @@ float fracPart( const char *instring )
  
    float numerator,
          denominator;
+
+   size_t len;
+
+   if (instring == NULL)
+   {
+      return (float)MAXINT;
+   }
  
    slash = strchr(instring, '/');
 
    if (slash == NULL) {
-    return ((float) atoi(instring));
+      return ((float) atoi(instring));
    }
  
-   memset(buf , '\0', sizeof(buf));
-   if (slash - instring >= sizeof(buf)) {
-     /* prevent buffer overflow */
-     return ((float) MAXINT);
+   len = (size_t)(slash - instring);
+   if (len >= sizeof(buf)) {
+      /* prevent buffer overflow */
+      return ((float) MAXINT);
    }
-   strncpy( buf, instring, slash - instring);
+   
+   memcpy( buf, instring, len );
+   buf[len] = '\0';
  
    numerator = (float) atoi(buf);
  
    denominator = (float) atoi(slash + 1);
  
-   if( denominator == 0.0 )
+   if( denominator == 0.0f )
       return ((float) MAXINT);
    else
       return (numerator/denominator);
  
 }
- 
-// vim: set ts=4 sw=4 sts=4 noet :
