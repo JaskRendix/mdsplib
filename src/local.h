@@ -30,8 +30,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 /*                                                                   */
 /*********************************************************************/
  
-#ifndef locallib_defined
-#define locallib_defined
+#ifndef LOCAL_H
+#define LOCAL_H
  
  
  
@@ -41,7 +41,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  
 #include <assert.h>
 #include <ctype.h>
-/* #include <ctest.h>   Includes IBM specific debugging libraries  */
 #include <errno.h>
 #include <float.h>
 #include <limits.h>
@@ -994,7 +993,6 @@ typedef struct sw_dir_info_rec {
   char flag1;
   char flag2;
   char flag3;
-  //char class;
   short int domestic_cat_num;
   char afos_tmp;
   char ccb[2];
@@ -1130,8 +1128,6 @@ void fdump(FILE *, char *, int);
  
 void fwdump(FILE *, char *, int);
  
-/* char toascii(char); */
- 
 char *strtoas(char *);
  
 char *strntoas(char *, int);
@@ -1180,13 +1176,9 @@ char *rptfmt2(char *);
 char *rptfmti(char *, unsigned short int);
 char *rptfmtni(char *, unsigned short int);
  
-// char *strnstr(char *, char *, size_t);
- 
 int stregion(int);
 int ccregion(char *);
 char *rgnname(int);
- 
-// void *memrchr(const void *, int, size_t);
  
 MDSP_BOOL sysmonms(char *, char *, ...);
 MDSP_BOOL sysmoncl(char *);
@@ -1241,4 +1233,4 @@ char *nxtgroup( char * );
  
 void prtmdade(struct MDAD_data *);
  
-#endif
+#endif /* LOCAL_H */
