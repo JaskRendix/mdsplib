@@ -30,7 +30,7 @@ static int test_fracpart(void)
     CHECK(fracPart(NULL) == (float)MAXINT);
 
     CHECK(fabs(fracPart("abc/2") - 0.0f) < 1e-6f);
-    CHECK(fabs(fracPart("2/abc") - 0.0f) < 1e-6f);
+    CHECK(fracPart("2/abc") == (float)MAXINT);
 
     {
         const char *long_fraction =
