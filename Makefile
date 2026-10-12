@@ -91,4 +91,5 @@ ifeq ($(OS),Windows_NT)
 	del /q antoi_test.exe 2>NUL
 	del /q libmetar.a 2>NUL
 else
-	rm -f libmetar.a src/*.o tests/*.o
+	rm -f libmetar.a src/*.o tests/*.o metar_test antoi_test
+endif
