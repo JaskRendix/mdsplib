@@ -57,7 +57,43 @@ if(BUILD_TESTING)
     )
     target_link_libraries(antoi_test PRIVATE metar)
 
+    add_executable(charcmp_test
+        tests/charcmp_test.c
+    )
+    target_include_directories(charcmp_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+    )
+    target_link_libraries(charcmp_test PRIVATE metar)
+
+    add_executable(fracpart_test
+        tests/fracpart_test.c
+    )
+    target_include_directories(fracpart_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+    )
+    target_link_libraries(fracpart_test PRIVATE metar)
+
+    add_executable(stspack2_test
+        tests/stspack2_test.c
+    )
+    target_include_directories(stspack2_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+    )
+    target_link_libraries(stspack2_test PRIVATE metar)
+
+    add_executable(stspack3_test
+        tests/stspack3_test.c
+    )
+    target_include_directories(stspack3_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+    )
+    target_link_libraries(stspack3_test PRIVATE metar)
+
     add_test(NAME metar_test COMMAND metar_test)
     add_test(NAME antoi_test COMMAND antoi_test)
+    add_test(NAME charcmp_test COMMAND charcmp_test)
+    add_test(NAME fracpart_test COMMAND fracpart_test)
+    add_test(NAME stspack2_test COMMAND stspack2_test)
+    add_test(NAME stspack3_test COMMAND stspack3_test)
 
 endif()
