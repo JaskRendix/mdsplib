@@ -24,6 +24,7 @@ TESTS = \
 	antoi_test \
 	charcmp_test \
 	fracpart_test \
+	print_decoded_metar_test \
 	stspack2_test \
 	stspack3_test
 
