@@ -44,10 +44,16 @@ if(BUILD_TESTING)
     add_executable(metar_test
         tests/metar_test.c
     )
+    target_include_directories(metar_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+    )
     target_link_libraries(metar_test PRIVATE metar)
 
     add_executable(antoi_test
         tests/antoi_test.c
+    )
+    target_include_directories(antoi_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
     )
     target_link_libraries(antoi_test PRIVATE metar)
 
