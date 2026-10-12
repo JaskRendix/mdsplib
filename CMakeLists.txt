@@ -14,6 +14,7 @@ add_library(metar STATIC
     src/charcmp.c
     src/decode_metar.c
     src/decode_metar_remark.c
+    src/remark_quality_flags.c
     src/fracpart.c
     src/print_decoded_metar.c
     src/stspack2.c
