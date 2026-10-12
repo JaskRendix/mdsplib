@@ -21,7 +21,7 @@ OBJS = \
 .PHONY: all library test install clean
 
 # Default target
-all: metar_test library
+all: metar_test antoi_test library
 
 library: libmetar.a
 
@@ -30,8 +30,11 @@ libmetar.a: $(OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 	ranlib $@
 
-# Test executable
-metar_test: src/metar_test.o libmetar.a
+# Test executables
+metar_test: tests/metar_test.o libmetar.a
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+
+antoi_test: tests/antoi_test.o libmetar.a
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
 # Source dependencies
@@ -47,9 +50,6 @@ src/decode_metar.o: src/decode_metar.c src/metar_structs.h
 src/decode_metar_remark.o: src/decode_metar_remark.c src/metar_structs.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-src/metar_test.o: src/metar_test.c src/metar_structs.h
-	$(CC) $(CFLAGS) -c $< -o $@
-
 src/fracpart.o: src/fracpart.c src/local.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -62,9 +62,17 @@ src/stspack2.o: src/stspack2.c src/local.h
 src/stspack3.o: src/stspack3.c src/local.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# Test dependencies
+tests/metar_test.o: tests/metar_test.c src/metar_structs.h
+	$(CC) $(CFLAGS) -Isrc -c $< -o $@
+
+tests/antoi_test.o: tests/antoi_test.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
 # Run tests
-test: metar_test
+test: metar_test antoi_test
 	./metar_test
+	./antoi_test
 
 # Installation
 install: library
@@ -78,8 +86,9 @@ install: library
 clean:
 ifeq ($(OS),Windows_NT)
 	del /q src\*.o 2>NUL
+	del /q tests\*.o 2>NUL
 	del /q metar_test.exe 2>NUL
+	del /q antoi_test.exe 2>NUL
 	del /q libmetar.a 2>NUL
 else
-	rm -f libmetar.a src/*.o src/*.a metar_test
-endif
+	rm -f libmetar.a src/*.o tests/*.o
