@@ -21,36 +21,40 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  
 /********************************************************************/
 /*                                                                  */
-/*  Title:         charcmp                                          */
-/*  Organization:  W/OSO242 - GRAPHICS AND DISPLAY SECTION          */
-/*  Date:          12 Dec 1995                                      */
-/*  Programmer:    CINDY L. CHONG                                   */
-/*  Language:      C/370                                            */
+/*  Title:          charcmp                                         */
+/*  Organization:   W/OSO242 - GRAPHICS AND DISPLAY SECTION         */
+/*  Date:           12 Dec 1995                                     */
+/*  Programmer:     CINDY L. CHONG                                  */
+/*  Language:       C/370                                           */
 /*                                                                  */
-/*  Abstract:      This function will compare each character in the */
-/*                 string match with each character in the pattern  */
-/*                 which is made up of characters.   The str can    */
-/*                 be longer than the pattern.                      */
+/*  Abstract:       This function will compare each character in the */
+/*                  string match with each character in the pattern */
+/*                  which is made up of characters.  The str can    */
+/*                  be longer than the pattern.                     */
 /*                                                                  */
 /*  External Functions Called:                                      */
-/*                 None.                                            */
+/*                  None.                                           */
 /*                                                                  */
-/*  Input:         str is a pointer to char                         */
-/*                 pattern is a pointer to char                     */
+/*  Input:          str is a pointer to char                        */
+/*                  pattern is a pointer to char                    */
 /*                                                                  */
-/*  Output:        Return true if str matches pattern,              */
-/*                 otherwise, return false                          */
+/*  Output:         Return true if str matches pattern,             */
+/*                  otherwise, return false                         */
 /*                                                                  */
 /*  Modification History:                                           */
-/*                 None.                                            */
+/*                  None.                                           */
 /*                                                                  */
 /********************************************************************/
 MDSP_BOOL charcmp(char *str, char *pattern)
 {
- 
- 
+    /* Validate input pointers to prevent null dereferences */
+    if (str == NULL || pattern == NULL)
+    {
+        return FALSE;
+    }
+
    /* Loop while str and pattern is not equal to null, then  */
-   /* inscreases str and pattern by one                      */
+   /* inscreases str and pattern by one                     */
  
    for (; *pattern != '\0'; pattern++)
    {
@@ -60,20 +64,20 @@ MDSP_BOOL charcmp(char *str, char *pattern)
       /* If pattern match str, then increase str and jump out the */
       /* case and read next char of the str and pattern           */
  
-      if ( isspace(*pattern) )
+      if ( isspace((unsigned char)*pattern) )
          pattern = nxtalpha(pattern);
  
       switch( *pattern )
       {
          case 'c':
-            if ( !isalnum(*str++) )
+            if ( !isalnum((unsigned char)*str++) )
             {
                return FALSE;
             }
             break;
  
          case 'a':
-            if ( !isalpha(*str) )
+            if ( !isalpha((unsigned char)*str) )
             {
                return FALSE;
             }
@@ -81,14 +85,14 @@ MDSP_BOOL charcmp(char *str, char *pattern)
             break;
  
          case 'n':
-            if ( !iscntrl(*str++) )
+            if ( !iscntrl((unsigned char)*str++) )
             {
                return FALSE;
             }
             break;
  
          case 'd':
-            if ( !isdigit(*str) )
+            if ( !isdigit((unsigned char)*str) )
             {
                return FALSE;
             }
@@ -96,42 +100,42 @@ MDSP_BOOL charcmp(char *str, char *pattern)
             break;
  
          case 'g':
-            if ( !isgraph(*str++) )
+            if ( !isgraph((unsigned char)*str++) )
             {
                return FALSE;
             }
             break;
  
          case 'i':
-            if ( !islower(*str++) )
+            if ( !islower((unsigned char)*str++) )
             {
                return FALSE;
             }
             break;
  
          case 'p':
-            if ( !isprint(*str++) )
+            if ( !isprint((unsigned char)*str++) )
             {
                return FALSE;
             }
             break;
  
          case 't':
-            if ( !ispunct(*str++) )
+            if ( !ispunct((unsigned char)*str++) )
             {
                return FALSE;
             }
             break;
  
          case 'w':
-            if ( !isspace(*str++) )
+            if ( !isspace((unsigned char)*str++) )
             {
                return FALSE;
             }
             break;
  
          case 'u':
-            if ( !isupper(*str++) )
+            if ( !isupper((unsigned char)*str++) )
             {
                return FALSE;
             }
@@ -145,13 +149,13 @@ MDSP_BOOL charcmp(char *str, char *pattern)
             break;
  
          case 'm':
-            if ( !isspace(*str) )
+            if ( !isspace((unsigned char)*str) )
             {
                return FALSE;
             }
             else
             {
-               while ( isspace(*str) )
+               while ( isspace((unsigned char)*str) )
                   str++;
             }
             break;
@@ -175,5 +179,3 @@ MDSP_BOOL charcmp(char *str, char *pattern)
  
    return (TRUE);
 }
-
-// vim: set ts=4 sw=4 sts=4 noet :
