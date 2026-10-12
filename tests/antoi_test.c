@@ -3,25 +3,23 @@
 
 int antoi(const char *string, int len);
 
+#define CHECK(expr) \
+    do { \
+        if (!(expr)) { \
+            fprintf(stderr, "FAILED: %s (line %d)\n", \
+                    #expr, __LINE__); \
+            return 0; \
+        } \
+    } while (0)
+
 static int test_antoi(void)
 {
-    if (antoi("12345", 5) != 12345)
-        return 0;
-
-    if (antoi("12345abc", 5) != 12345)
-        return 0;
-
-    if (antoi("-42xyz", 3) != -42)
-        return 0;
-
-    if (antoi("123", 0) != 0)
-        return 0;
-
-    if (antoi(NULL, 5) != INT_MIN)
-        return 0;
-
-    if (antoi("123", -1) != INT_MIN)
-        return 0;
+    CHECK(antoi("12345", 5) == 12345);
+    CHECK(antoi("12345abc", 5) == 12345);
+    CHECK(antoi("-42xyz", 3) == -42);
+    CHECK(antoi("123", 0) == 0);
+    CHECK(antoi(NULL, 5) == INT_MIN);
+    CHECK(antoi("123", -1) == INT_MIN);
 
     return 1;
 }
