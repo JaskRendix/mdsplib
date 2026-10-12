@@ -161,14 +161,20 @@ MDSP_BOOL charcmp(char *str, char *pattern)
             break;
  
          case '\'':
-            pattern++;
-            if (*pattern != *str)
-            {
-               return FALSE;
-            }
-            pattern++;
-            str++;
-            break;
+             pattern++;
+         
+             if (*pattern == '\0')
+             {
+                 return FALSE;
+             }
+         
+             if (*pattern != *str)
+             {
+                 return FALSE;
+             }
+         
+             str++;
+             break;
  
          default:
             return FALSE;
