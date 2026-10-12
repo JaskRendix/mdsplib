@@ -1,7 +1,6 @@
 #ifndef MDSPLIB_METAR_H__
 #define MDSPLIB_METAR_H__
 
-/* ref: http://limulus.net/mdsplib */
 /*
 METAR Decoder Software Package Library: Parses Aviation Routine Weather Reports
 Copyright (C) 2003  Eric McCarthy
@@ -53,7 +52,7 @@ typedef enum distance_unit { DIST_FEET, DIST_METERS } Distance_Unit;
 /*********************************************/
 /*                                           */
 /* RUNWAY VISUAL RANGE STRUCTURE DECLARATION */
-/*       AND VARIABLE TYPE DEFINITION        */
+/*        AND VARIABLE TYPE DEFINITION       */
 /*                                           */
 /*********************************************/
  
@@ -71,7 +70,7 @@ typedef struct runway_VisRange {
 /***********************************************/
 /*                                             */
 /* DISPATCH VISUAL RANGE STRUCTURE DECLARATION */
-/*       AND VARIABLE TYPE DEFINITION          */
+/*        AND VARIABLE TYPE DEFINITION         */
 /*                                             */
 /***********************************************/
  
@@ -310,7 +309,7 @@ typedef struct decoded_METAR {
 /*                                                                  */
 /*  Modification History:                                           */
 /*                 3 Jul 2001 by Eric McCarthy: Added stringCpy     */
-/*                     so cosnt char *'s could be passed in.        */
+/*                     so const char * values could be passed in.   */
 /*                                                                  */
 /********************************************************************/
 
@@ -393,4 +392,4 @@ int decode_net_metar (const char *instring, Decoded_METAR *Mptr);
 void sprint_metar( char *outstring, Decoded_METAR *Mptr );
 
 
-#endif // MDSPLIB_METAR_H__
+#endif /* MDSPLIB_METAR_H__ */
