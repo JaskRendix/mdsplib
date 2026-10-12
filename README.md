@@ -1,5 +1,3 @@
-![CI](https://github.com/flightaware/mdsplib/actions/workflows/ci.yml/badge.svg)
-
 METAR Decoder Software Package Library
 ===
 
