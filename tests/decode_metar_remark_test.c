@@ -4,6 +4,7 @@
 
 #include "metar_structs.h"
 
+int decode_metar(const char *instring, Decoded_METAR *Mptr);
 void decode_metar_remark(char **token, Decoded_METAR *Mptr);
 
 #define CHECK(expr) \
@@ -18,13 +19,15 @@ void decode_metar_remark(char **token, Decoded_METAR *Mptr);
 static char **make_tokens(const char *text)
 {
     static char *tokens[64];
-    char *copy;
+    static char buffer[512];
     char *tok;
     int i = 0;
 
-    copy = strdup(text);
+    strncpy(buffer, text, sizeof(buffer) - 1);
+    buffer[sizeof(buffer) - 1] = '\0';
 
-    tok = strtok(copy, " ");
+    tok = strtok(buffer, " ");
+
     while (tok != NULL && i < 63) {
         tokens[i++] = tok;
         tok = strtok(NULL, " ");
@@ -35,10 +38,28 @@ static char **make_tokens(const char *text)
     return tokens;
 }
 
+static int test_no_rmk(void)
+{
+    Decoded_METAR m;
+
+    decode_metar(
+        "METAR KJFK 121651Z 18010KT 10SM CLR 25/12 A2992",
+        &m);
+
+    decode_metar_remark(
+        make_tokens("METAR KJFK 121651Z"),
+        &m);
+
+    return 1;
+}
+
 static int test_ao2(void)
 {
     Decoded_METAR m;
-    memset(&m, 0, sizeof(m));
+
+    decode_metar(
+        "METAR KJFK 121651Z 18010KT 10SM CLR 25/12 A2992",
+        &m);
 
     decode_metar_remark(
         make_tokens("METAR KJFK RMK AO2"),
@@ -52,7 +73,10 @@ static int test_ao2(void)
 static int test_presfr(void)
 {
     Decoded_METAR m;
-    memset(&m, 0, sizeof(m));
+
+    decode_metar(
+        "METAR KJFK 121651Z 18010KT 10SM CLR 25/12 A2992",
+        &m);
 
     decode_metar_remark(
         make_tokens("METAR KJFK RMK PRESFR"),
@@ -66,7 +90,10 @@ static int test_presfr(void)
 static int test_presrr(void)
 {
     Decoded_METAR m;
-    memset(&m, 0, sizeof(m));
+
+    decode_metar(
+        "METAR KJFK 121651Z 18010KT 10SM CLR 25/12 A2992",
+        &m);
 
     decode_metar_remark(
         make_tokens("METAR KJFK RMK PRESRR"),
@@ -80,7 +107,10 @@ static int test_presrr(void)
 static int test_pwino(void)
 {
     Decoded_METAR m;
-    memset(&m, 0, sizeof(m));
+
+    decode_metar(
+        "METAR KJFK 121651Z 18010KT 10SM CLR 25/12 A2992",
+        &m);
 
     decode_metar_remark(
         make_tokens("METAR KJFK RMK PWINO"),
@@ -94,7 +124,10 @@ static int test_pwino(void)
 static int test_fzrano(void)
 {
     Decoded_METAR m;
-    memset(&m, 0, sizeof(m));
+
+    decode_metar(
+        "METAR KJFK 121651Z 18010KT 10SM CLR 25/12 A2992",
+        &m);
 
     decode_metar_remark(
         make_tokens("METAR KJFK RMK FZRANO"),
@@ -108,7 +141,10 @@ static int test_fzrano(void)
 static int test_tsno(void)
 {
     Decoded_METAR m;
-    memset(&m, 0, sizeof(m));
+
+    decode_metar(
+        "METAR KJFK 121651Z 18010KT 10SM CLR 25/12 A2992",
+        &m);
 
     decode_metar_remark(
         make_tokens("METAR KJFK RMK TSNO"),
@@ -122,7 +158,10 @@ static int test_tsno(void)
 static int test_pno(void)
 {
     Decoded_METAR m;
-    memset(&m, 0, sizeof(m));
+
+    decode_metar(
+        "METAR KJFK 121651Z 18010KT 10SM CLR 25/12 A2992",
+        &m);
 
     decode_metar_remark(
         make_tokens("METAR KJFK RMK PNO"),
@@ -136,7 +175,10 @@ static int test_pno(void)
 static int test_rvrno(void)
 {
     Decoded_METAR m;
-    memset(&m, 0, sizeof(m));
+
+    decode_metar(
+        "METAR KJFK 121651Z 18010KT 10SM CLR 25/12 A2992",
+        &m);
 
     decode_metar_remark(
         make_tokens("METAR KJFK RMK RVRNO"),
@@ -150,7 +192,10 @@ static int test_rvrno(void)
 static int test_dollar_sign(void)
 {
     Decoded_METAR m;
-    memset(&m, 0, sizeof(m));
+
+    decode_metar(
+        "METAR KJFK 121651Z 18010KT 10SM CLR 25/12 A2992",
+        &m);
 
     decode_metar_remark(
         make_tokens("METAR KJFK RMK $"),
@@ -164,7 +209,10 @@ static int test_dollar_sign(void)
 static int test_duplicate_flag_reset(void)
 {
     Decoded_METAR m;
-    memset(&m, 0, sizeof(m));
+
+    decode_metar(
+        "METAR KJFK 121651Z 18010KT 10SM CLR 25/12 A2992",
+        &m);
 
     decode_metar_remark(
         make_tokens("METAR KJFK RMK PWINO PWINO"),
@@ -177,6 +225,10 @@ static int test_duplicate_flag_reset(void)
 
 int main(void)
 {
+    printf("test_no_rmk\n");
+    fflush(stdout);
+    CHECK(test_no_rmk());
+
     printf("test_ao2\n");
     fflush(stdout);
     CHECK(test_ao2());
