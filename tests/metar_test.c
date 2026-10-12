@@ -737,17 +737,13 @@ int main(void)
   int j, ErReturn;
 
   for (j = 0; string[j] != NULL; j++) {
-      /*-- PRINT INPUT METAR REPORT ----------------------------*/
-      printf("\n\nINPUT METAR REPORT:\n\n%s\n\n", string[j]);
-  
-      /*-- DECODE INPUT REPORT ---------------------------------*/
+
       if ((ErReturn = decode_metar(string[j], Mptr)) != 0) {
-          printf("decode_metar: Error Return Number: %d\n", ErReturn);
+          fprintf(stderr,
+                  "decode_metar failed for sample %d (error %d):\n%s\n",
+                  j, ErReturn, string[j]);
+          return 1;
       }
-  
-      /*-- PRINT DECODED METAR REPORT ELEMENTS -----------------*/
-      printf("\n\nFINAL DECODED PRODUCT...\n\n");
-      print_decoded_metar(Mptr);
   }
 
   return 0;
