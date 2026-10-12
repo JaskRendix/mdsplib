@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "metar.h"
+#include "local.h"
 
 #define CHECK(expr) \
     do { \
