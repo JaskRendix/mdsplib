@@ -116,6 +116,18 @@ if(BUILD_TESTING)
         metar
     )
 
+    add_executable(decode_metar_remark_test
+        tests/decode_metar_remark_test.c
+    )
+
+    target_include_directories(decode_metar_remark_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+    )
+
+    target_link_libraries(decode_metar_remark_test PRIVATE
+        metar
+    )
+
     add_test(NAME metar_test COMMAND metar_test)
     add_test(NAME antoi_test COMMAND antoi_test)
     add_test(NAME charcmp_test COMMAND charcmp_test)
@@ -124,5 +136,6 @@ if(BUILD_TESTING)
     add_test(NAME stspack3_test COMMAND stspack3_test)
     add_test(NAME print_decoded_metar_test COMMAND print_decoded_metar_test)
     add_test(NAME decode_metar_test COMMAND decode_metar_test)
+    add_test(NAME decode_metar_remark_test COMMAND decode_metar_remark_test)
 
 endif()

@@ -1,0 +1,213 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "metar_structs.h"
+
+void decode_metar_remark(char **token, Decoded_METAR *Mptr);
+
+#define CHECK(expr) \
+    do { \
+        if (!(expr)) { \
+            fprintf(stderr, "FAILED: %s (line %d)\n", \
+                    #expr, __LINE__); \
+            return 0; \
+        } \
+    } while (0)
+
+static char **make_tokens(const char *text)
+{
+    static char *tokens[64];
+    char *copy;
+    char *tok;
+    int i = 0;
+
+    copy = strdup(text);
+
+    tok = strtok(copy, " ");
+    while (tok != NULL && i < 63) {
+        tokens[i++] = tok;
+        tok = strtok(NULL, " ");
+    }
+
+    tokens[i] = NULL;
+
+    return tokens;
+}
+
+static int test_no_rmk(void)
+{
+    Decoded_METAR m;
+    memset(&m, 0, sizeof(m));
+
+    decode_metar_remark(
+        make_tokens("METAR KJFK 121651Z"),
+        &m);
+
+    return 1;
+}
+
+static int test_ao2(void)
+{
+    Decoded_METAR m;
+    memset(&m, 0, sizeof(m));
+
+    decode_metar_remark(
+        make_tokens("METAR KJFK RMK AO2"),
+        &m);
+
+    CHECK(strcmp(m.autoIndicator, "AO2") == 0);
+
+    return 1;
+}
+
+static int test_presfr(void)
+{
+    Decoded_METAR m;
+    memset(&m, 0, sizeof(m));
+
+    decode_metar_remark(
+        make_tokens("METAR KJFK RMK PRESFR"),
+        &m);
+
+    CHECK(m.PRESFR == TRUE);
+
+    return 1;
+}
+
+static int test_presrr(void)
+{
+    Decoded_METAR m;
+    memset(&m, 0, sizeof(m));
+
+    decode_metar_remark(
+        make_tokens("METAR KJFK RMK PRESRR"),
+        &m);
+
+    CHECK(m.PRESRR == TRUE);
+
+    return 1;
+}
+
+static int test_pwino(void)
+{
+    Decoded_METAR m;
+    memset(&m, 0, sizeof(m));
+
+    decode_metar_remark(
+        make_tokens("METAR KJFK RMK PWINO"),
+        &m);
+
+    CHECK(m.PWINO == TRUE);
+
+    return 1;
+}
+
+static int test_fzrano(void)
+{
+    Decoded_METAR m;
+    memset(&m, 0, sizeof(m));
+
+    decode_metar_remark(
+        make_tokens("METAR KJFK RMK FZRANO"),
+        &m);
+
+    CHECK(m.FZRANO == TRUE);
+
+    return 1;
+}
+
+static int test_tsno(void)
+{
+    Decoded_METAR m;
+    memset(&m, 0, sizeof(m));
+
+    decode_metar_remark(
+        make_tokens("METAR KJFK RMK TSNO"),
+        &m);
+
+    CHECK(m.TSNO == TRUE);
+
+    return 1;
+}
+
+static int test_pno(void)
+{
+    Decoded_METAR m;
+    memset(&m, 0, sizeof(m));
+
+    decode_metar_remark(
+        make_tokens("METAR KJFK RMK PNO"),
+        &m);
+
+    CHECK(m.PNO == TRUE);
+
+    return 1;
+}
+
+static int test_rvrno(void)
+{
+    Decoded_METAR m;
+    memset(&m, 0, sizeof(m));
+
+    decode_metar_remark(
+        make_tokens("METAR KJFK RMK RVRNO"),
+        &m);
+
+    CHECK(m.RVRNO == TRUE);
+
+    return 1;
+}
+
+static int test_dollar_sign(void)
+{
+    Decoded_METAR m;
+    memset(&m, 0, sizeof(m));
+
+    decode_metar_remark(
+        make_tokens("METAR KJFK RMK $"),
+        &m);
+
+    CHECK(m.DollarSign == TRUE);
+
+    return 1;
+}
+
+static int test_duplicate_flag_reset(void)
+{
+    Decoded_METAR m;
+    memset(&m, 0, sizeof(m));
+
+    decode_metar_remark(
+        make_tokens("METAR KJFK RMK PWINO PWINO"),
+        &m);
+
+    CHECK(m.PWINO == FALSE);
+
+    return 1;
+}
+
+int main(void)
+{
+    CHECK(test_no_rmk());
+
+    CHECK(test_ao2());
+
+    CHECK(test_presfr());
+    CHECK(test_presrr());
+
+    CHECK(test_pwino());
+    CHECK(test_fzrano());
+    CHECK(test_tsno());
+
+    CHECK(test_pno());
+    CHECK(test_rvrno());
+
+    CHECK(test_dollar_sign());
+
+    CHECK(test_duplicate_flag_reset());
+
+    printf("decode_metar_remark tests passed\n");
+
+    return 0;
+}
