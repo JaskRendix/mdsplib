@@ -37,16 +37,21 @@ if(MSVC)
     )
 endif()
 
-add_executable(metar_test
-    src/metar_test.c
-)
-
-target_link_libraries(metar_test PRIVATE metar)
-
 include(CTest)
+
 if(BUILD_TESTING)
-    add_test(
-        NAME metar_test
-        COMMAND metar_test
+
+    add_executable(metar_test
+        tests/metar_test.c
     )
+    target_link_libraries(metar_test PRIVATE metar)
+
+    add_executable(antoi_test
+        tests/antoi_test.c
+    )
+    target_link_libraries(antoi_test PRIVATE metar)
+
+    add_test(NAME metar_test COMMAND metar_test)
+    add_test(NAME antoi_test COMMAND antoi_test)
+
 endif()
