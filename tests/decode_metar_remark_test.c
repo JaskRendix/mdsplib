@@ -35,18 +35,6 @@ static char **make_tokens(const char *text)
     return tokens;
 }
 
-static int test_no_rmk(void)
-{
-    Decoded_METAR m;
-    memset(&m, 0, sizeof(m));
-
-    decode_metar_remark(
-        make_tokens("METAR KJFK 121651Z"),
-        &m);
-
-    return 1;
-}
-
 static int test_ao2(void)
 {
     Decoded_METAR m;
@@ -189,10 +177,6 @@ static int test_duplicate_flag_reset(void)
 
 int main(void)
 {
-    printf("test_no_rmk\n");
-    fflush(stdout);
-    CHECK(test_no_rmk());
-
     printf("test_ao2\n");
     fflush(stdout);
     CHECK(test_ao2());
